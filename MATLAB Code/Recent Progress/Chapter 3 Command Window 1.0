@@ -1,0 +1,769 @@
+diary on
+Phi
+ 
+Phi =
+ 
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+phi_z=diff(Phi, Pz);
+%{ Tetragonal Boundary Conditions - Solving For Spontaneous Polarization %}
+Px=0; Py =0;
+phi_z
+ 
+phi_z =
+ 
+2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z=2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z =
+ 
+8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz
+ 
+simplify(phi_z./(Pz*2))
+ 
+ans =
+ 
+4*a1111*Pz^6 + 3*a111*Pz^4 + 2*a11*Pz^2 + a1
+ 
+phi_z_tetragonal=ans;
+phi_z_tetragonal=4*a1111*Pz^3 + 3*a111*Pz^2 + 2*a11*Pz + a1;
+solve(phi_z_tetragonal, Pz);
+%{ Cubic Relation where the first solution is real and the two latter solutions are imaginary/complex/non-physical quantities %}
+Pz=[ans(1)].^(1/2)
+ 
+Pz =
+ 
+((((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) - a111/(4*a1111) - (a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^(1/2)
+ 
+pretty(Pz)
+ 
+/ 
+|                                                                                                             1 
+|                                                                                                             - 
+| / / /                 3               \2   /                 2   \3 \1/2         3                         \3 
+| | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  |     a111 
+| | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- |  - ------- - 
+| | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 |    4 a1111 
+| \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  / 
+| 
+| 
+| 
+| 
+\ 
+ 
+                                                                2                                                \ 
+                                                  a11       a111                                                 | 
+                                                ------- - ---------                                              | 
+                                                6 a1111           2                                              | 
+                                                          16 a1111                                               | 
+   ------------------------------------------------------------------------------------------------------------- |^(1/2) 
+                                                                                                               1 | 
+                                                                                                               - | 
+   / / /                 3               \2   /                 2   \3 \1/2         3                         \3 | 
+   | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  |  | 
+   | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- |  | 
+   | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 |  | 
+   \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  /  /
+%{ This is the spontaneous polarization solution to be inserted into the stability relations to determine the temperature range of stability for the T phase. %}
+phi_xx
+ 
+phi_xx =
+ 
+2*a1 + a112*(2*Py^4 + 2*Pz^4 + 12*Px^2*(Py^2 + Pz^2)) + a1112*(2*Py^6 + 2*Pz^6 + 30*Px^4*(Py^2 + Pz^2)) + a1123*(12*Px^2*Py^2*Pz^2 + 2*Py^4*Pz^2 + 2*Py^2*Pz^4) + a12*(2*Py^2 + 2*Pz^2) + 12*Px^2*a11 + 30*Px^4*a111 + 56*Px^6*a1111 + a1122*(12*Px^2*Py^4 + 12*Px^2*Pz^4) + 2*Py^2*Pz^2*a123
+ 
+R1=2*a1 + a112*(2*Py^4 + 2*Pz^4 + 12*Px^2*(Py^2 + Pz^2)) + a1112*(2*Py^6 + 2*Pz^6 + 30*Px^4*(Py^2 + Pz^2)) + a1123*(12*Px^2*Py^2*Pz^2 + 2*Py^4*Pz^2 + 2*Py^2*Pz^4) + a12*(2*Py^2 + 2*Pz^2) + 12*Px^2*a11 + 30*Px^4*a111 + 56*Px^6*a1111 + a1122*(12*Px^2*Py^4 + 12*Px^2*Pz^4) + 2*Py^2*Pz^2*a123
+ 
+R1 =
+ 
+2*a1 + 2*a112*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^2 - 2*a1112*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^3 - a12*((2*(a11/(6*a1111) - a111^2/(16*a1111^2)))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(2*a1111) - 2*(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))
+ 
+%{ The Tetragonal phase is stable for R1 >= 0 and for R2 >= 0 , where R1 and R2 are defined by Eq. 3.3.8 and 3.3.9 respectively %}
+phi_zz
+ 
+phi_zz =
+ 
+2*a1 + a112*(2*Px^4 + 2*Py^4 + 12*Pz^2*(Px^2 + Py^2)) + a1112*(2*Px^6 + 2*Py^6 + 30*Pz^4*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2 + 2*Px^2*Py^4 + 12*Px^2*Py^2*Pz^2) + a12*(2*Px^2 + 2*Py^2) + 12*Pz^2*a11 + 30*Pz^4*a111 + 56*Pz^6*a1111 + a1122*(12*Px^4*Pz^2 + 12*Py^4*Pz^2) + 2*Px^2*Py^2*a123
+ 
+R2=2*a1 + a112*(2*Px^4 + 2*Py^4 + 12*Pz^2*(Px^2 + Py^2)) + a1112*(2*Px^6 + 2*Py^6 + 30*Pz^4*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2 + 2*Px^2*Py^4 + 12*Px^2*Py^2*Pz^2) + a12*(2*Px^2 + 2*Py^2) + 12*Pz^2*a11 + 30*Pz^4*a111 + 56*Pz^6*a1111 + a1122*(12*Px^4*Pz^2 + 12*Py^4*Pz^2) + 2*Px^2*Py^2*a123
+ 
+R2 =
+ 
+2*a1 + 30*a111*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^2 - 56*a1111*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^3 - a11*((12*(a11/(6*a1111) - a111^2/(16*a1111^2)))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + (3*a111)/a1111 - 12*(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))
+ 
+%{ Here on out is simply brute force tactics for solving a non-numerical solution for the stability for the T phase dependent on Temperature.  Of note is that only a1 is temp. dependent for Li coefficients while a1, a11, a12, and a111 are all temperature dependent for Wang coefficients. %}
+pretty(R1)
+ 
+              /                                                              2 
+              |                                                a11       a111 
+              |                                              ------- - --------- 
+              |                                              6 a1111           2 
+              |                                                        16 a1111                                                  a111 
+2 a1 + 2 a112 | ------------------------------------------------------------------------------------------------------------- + ------- - 
+              |                                                                                                             1   4 a1111 
+              |                                                                                                             - 
+              | / / /                 3               \2   /                 2   \3 \1/2         3                         \3 
+              | | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  | 
+              | | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- | 
+              | | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 | 
+              \ \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  / 
+ 
+                                                                                                                   \ 
+                                                                                                                   | 
+                                                                                                                   | 
+   / / /                 3               \2   /                 2   \3 \1/2         3                         \1/3 | 
+   | | |    a1       a111       a11 a111 |    |   a11       a111    |  |        a111         a1      a11 a111 |    | 
+   | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- |    |^2 - 
+   | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 |    | 
+   \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  /    | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   / 
+ 
+           /                                                              2 
+           |                                                a11       a111 
+           |                                              ------- - --------- 
+           |                                              6 a1111           2 
+           |                                                        16 a1111                                                  a111 
+   2 a1112 | ------------------------------------------------------------------------------------------------------------- + ------- - 
+           |                                                                                                             1   4 a1111 
+           |                                                                                                             - 
+           | / / /                 3               \2   /                 2   \3 \1/2         3                         \3 
+           | | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  | 
+           | | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- | 
+           | | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 | 
+           \ \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  / 
+ 
+                                                                                                                   \ 
+                                                                                                                   | 
+                                                                                                                   | 
+   / / /                 3               \2   /                 2   \3 \1/2         3                         \1/3 | 
+   | | |    a1       a111       a11 a111 |    |   a11       a111    |  |        a111         a1      a11 a111 |    | 
+   | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- |    |^3 - a12 
+   | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 |    | 
+   \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  /    | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   / 
+ 
+   /                                             /                 2   \ 
+   |                                             |   a11       a111    | 
+   |                                           2 | ------- - --------- | 
+   |                                             | 6 a1111           2 | 
+   |                                             \           16 a1111  /                                              a111 
+   | ------------------------------------------------------------------------------------------------------------- + ------- - 
+   |                                                                                                             1   2 a1111 
+   |                                                                                                             - 
+   | / / /                 3               \2   /                 2   \3 \1/2         3                         \3 
+   | | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  | 
+   | | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- | 
+   | | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 | 
+   \ \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  / 
+ 
+                                                                                                                   \ 
+                                                                                                                 1 | 
+                                                                                                                 - | 
+     / / /                 3               \2   /                 2   \3 \1/2         3                         \3 | 
+     | | |   a1        a111      a11 a111  |    |   a11       a111    |  |        a111        a1      a11 a111  |  | 
+   2 | | | ------- + --------- - --------- |  + | ------- - --------- |  |    - --------- - ------- + --------- |  | 
+     | | | 8 a1111           3           2 |    | 6 a1111           2 |  |              3   8 a1111           2 |  | 
+     \ \ \           64 a1111    16 a1111  /    \           16 a1111  /  /      64 a1111              16 a1111  /  | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   | 
+                                                                                                                   /
+solve([R1, R2], [a1, a11])
+{Warning: possibly spurious solutions [solvelib::checkVectorSolutions]} 
+{Warning: Explicit solution could not be found.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\solve.m',81,1)">solve at 81</a>
+ 
+ans =
+ 
+[ empty sym ]
+ 
+Phi
+ 
+Phi =
+ 
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+syms Pz;
+Phi_tetragonal=a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+Phi_tetragonal =
+ 
+a1111*Pz^8 + a111*Pz^6 + a11*Pz^4 + a1*Pz^2
+ 
+phi_z_tetragonal=4*a1111*Pz^3 + 3*a111*Pz^2 + 2*a11*Pz + a1;
+diff(phi_z_tetragonal, Pz)
+ 
+ans =
+ 
+12*a1111*Pz^2 + 6*a111*Pz + 2*a11
+ 
+%{ Source 10 Sergienko takes derivative of polarization solution to get stability relations AFTER simplifying the equation of state NOTE causes restriction P cannot = 0 , which is not an issue for Ferroelectric case only.}%
+R1_simplfied=simplify(ans./2)
+ 
+R1_simplfied =
+ 
+6*a1111*Pz^2 + 3*a111*Pz + a11
+ 
+R2_simplifie=R1_simplified
+{??? Undefined function or variable 'R1_simplified'.
+} 
+R2_simplifie=R1_simplfied
+ 
+R2_simplifie =
+ 
+6*a1111*Pz^2 + 3*a111*Pz + a11
+ 
+R2_simplified=R1_simplfied
+ 
+R2_simplified =
+ 
+6*a1111*Pz^2 + 3*a111*Pz + a11
+ 
+clear R2_simplifie
+%{ Mixed up notations accidentally %}
+clear R1_simplified 
+clear R1_simplfied
+%{ R1 trivially becomes zero from the simplification %}
+phi_z
+ 
+phi_z =
+ 
+8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz
+ 
+%{ Mistake #1 reduced the power of Pz in phi_z_tetragonal and then differentiated %}
+phi_z=2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z =
+ 
+8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz
+ 
+syms Px Py;
+phi_z=2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123;
+Px=0; Py=0;
+phi_z_tetragonal=[8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz]./(2*Pz)
+ 
+phi_z_tetragonal =
+ 
+(8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz)/(2*Pz)
+ 
+phi_z_tetragonal=simplify([8*a1111*Pz^7 + 6*a111*Pz^5 + 4*a11*Pz^3 + 2*a1*Pz]./(2*Pz))
+ 
+phi_z_tetragonal =
+ 
+4*a1111*Pz^6 + 3*a111*Pz^4 + 2*a11*Pz^2 + a1
+ 
+R2=diff(phi_z_tetragonal, Pz)
+ 
+R2 =
+ 
+24*a1111*Pz^5 + 12*a111*Pz^3 + 4*a11*Pz
+ 
+R2_simplified=diff(phi_z_tetragonal, Pz);
+simplify(R2_simplified./(4*Pz))
+ 
+ans =
+ 
+6*a1111*Pz^4 + 3*a111*Pz^2 + a11
+ 
+R2_simplified=6*a1111*Pz^4 + 3*a111*Pz^2 + a11;
+%{ Now to plot the new simplified R2 inequality using the polarization relation (Temporarily using Wang coefficients for numerical evaluation %}
+solve(4*a1111*Pz^3 + 3*a111*Pz^2 + 2*a11*Pz + a1, Pz)
+ 
+ans =
+ 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                     (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) - a111/(4*a1111) - (a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3)
+ (a11/(6*a1111) - a111^2/(16*a1111^2))/(2*(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3)) - a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3)/2 - (3^(1/2)*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))*i)/2
+ (a11/(6*a1111) - a111^2/(16*a1111^2))/(2*(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3)) - a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3)/2 + (3^(1/2)*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))*i)/2
+ 
+Pz=[ans(1)].^(1/2);
+R2_simplfied_Evaluated=6*a1111*Pz^4 + 3*a111*Pz^2 + a11;
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+T=[0:450];
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+R2_simplfied_Evaluated
+ 
+R2_simplfied_Evaluated =
+ 
+a11 + 6*a1111*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^2 - 3*a111*((a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) + a111/(4*a1111) - (((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))
+ 
+Pz
+ 
+Pz =
+ 
+((((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3) - a111/(4*a1111) - (a11/(6*a1111) - a111^2/(16*a1111^2))/(((a1/(8*a1111) + a111^3/(64*a1111^3) - (a11*a111)/(16*a1111^2))^2 + (a11/(6*a1111) - a111^2/(16*a1111^2))^3)^(1/2) - a111^3/(64*a1111^3) - a1/(8*a1111) + (a11*a111)/(16*a1111^2))^(1/3))^(1/2)
+ 
+Pz=((((a1./(8*a1111) + a111.^3/(64*a1111^3) - (a11.*a111)./(16*a1111.^2)).^2 + (a11./(6*a1111) - a111.^2/(16*a1111^2)).^3).^(1/2) - a111.^3/(64*a1111^3) - a1/(8*a1111) + (a11.*a111)./(16*a1111^2)).^(1/3) - a111./(4*a1111) - (a11./(6*a1111) - a111.^2/(16*a1111^2))./(((a1./(8*a1111) + a111.^3/(64*a1111^3) - (a11.*a111)/(16*a1111^2)).^2 + (a11./(6*a1111) - a111.^2/(16*a1111^2)).^3).^(1/2) - a111.^3/(64*a1111^3) - a1/(8*a1111) + (a11.*a111)/(16*a1111^2)).^(1/3)).^(1/2);
+%{ NOTE the decimal describes that a matrix operator is involved and has no effect on scalar values , i.e. it is a MATLAB notation property. %}
+Pz_tetragonal_wang=Pz;
+R2_simplfied_Evaluated=6*a1111*Pz.^4 + 3*a111.*Pz.^2 + a11;
+plot(T, R2_simplfied_Evaluated);
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+hold on; plot(T, T*0);
+%{ The Tetragonal phase is stable for all temperature values below 407 degrees Kelvin where the Curie point is 391 Kelvin. %}
+%{ Now back to the non-numerical evaluation of the stability region for the Tetragonal phase. %}
+syms Pz;
+hold off; ezmesh(3*a111*Pz^4+8*a1111*Pz^6, -3*a111*Pz^2-6*a1111*Pz^4)
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',2712,0)">sym.sym>checkNoSyms at 2712</a>
+Too many sym objects to plot.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',2114,0)">sym.sym>sym.ezhelper at 2114</a>
+            checkNoSyms(varargin);
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\ezmesh.m',51,0)">sym.ezmesh at 51</a>
+ezhelper(@ezmesh,f,varargin{:});
+} 
+R1_modified=a1112*Pz.^3+a112*Pz.^2+a12;
+hold on; plot(T, R1_modified);
+{??? Error using ==> plot
+Conversion to double from sym is not possible.
+} 
+Pz=((((a1./(8*a1111) + a111.^3/(64*a1111^3) - (a11.*a111)./(16*a1111.^2)).^2 + (a11./(6*a1111) - a111.^2/(16*a1111^2)).^3).^(1/2) - a111.^3/(64*a1111^3) - a1/(8*a1111) + (a11.*a111)./(16*a1111^2)).^(1/3) - a111./(4*a1111) - (a11./(6*a1111) - a111.^2/(16*a1111^2))./(((a1./(8*a1111) + a111.^3/(64*a1111^3) - (a11.*a111)/(16*a1111^2)).^2 + (a11./(6*a1111) - a111.^2/(16*a1111^2)).^3).^(1/2) - a111.^3/(64*a1111^3) - a1/(8*a1111) + (a11.*a111)/(16*a1111^2)).^(1/3)).^(1/2);
+R1_modified=a1112*Pz.^3+a112*Pz.^2+a12;
+hold on; plot(T, R1_modified);
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+R1_modified=a1112*Pz.^4+a112*Pz.^2+a12;
+hold on; plot(T, R1_modified);
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+R1=a1112*Pz.^6+a112*Pz.^4+a12.*Pz.^2+a1;
+plot(T, R1)
+{Warning: Imaginary parts of complex X and/or Y arguments igndiary on
+phi_z_tetragonal
+ 
+phi_z_tetragonal =
+ 
+4*a1111*Pz^6 + 3*a111*Pz^4 + 2*a11*Pz^2 + a1
+ 
+phi_z
+ 
+phi_z =
+ 
+2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+Px=0;
+Py=P/(2^(1/2));
+{??? Undefined function or variable 'P'.
+} 
+syms P;
+Py=P/(2^(1/2));
+Pz=P/(2^(1/2));
+phi_z_orthorhombic=2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z_orthorhombic =
+ 
+2^(1/2)*P*a1 + 2^(1/2)*P^3*a11 + (3*2^(1/2)*P^5*a111)/4 + (3*2^(1/2)*P^5*a112)/4 + (2^(1/2)*P^7*a1111)/2 + (2^(1/2)*P^7*a1112)/2 + (2^(1/2)*P^7*a1122)/4 + (2^(1/2)*P^3*a12)/2
+ 
+simplify(phi_z_orthorhombic./(P*2^(1/2))
+??? simplify(phi_z_orthorhombic./(P*2^(1/2))
+                                            |
+{Error: Expression or statement is incorrect--possibly unbalanced (, {, or [.
+} 
+simplify(phi_z_orthorhombic./(P*2^(1/2)))
+ 
+ans =
+ 
+(a1111/2 + a1112/2 + a1122/4)*P^6 + ((3*a111)/4 + (3*a112)/4)*P^4 + (a11 + a12/2)*P^2 + a1
+ 
+phi_z_orthorhombic=ans
+ 
+phi_z_orthorhombic =
+ 
+(a1111/2 + a1112/2 + a1122/4)*P^6 + ((3*a111)/4 + (3*a112)/4)*P^4 + (a11 + a12/2)*P^2 + a1
+ 
+R2_simplified=6*a1111*Pz^4 + 3*a111*Pz^2 + a11
+ 
+R2_simplified =
+ 
+(3*a1111*P^4)/2 + (3*a111*P^2)/2 + a11
+ 
+syms Pz; Py=0; Px=0;
+R2_simplified=6*a1111*Pz^4 + 3*a111*Pz^2 + a11
+ 
+R2_simplified =
+ 
+6*a1111*Pz^4 + 3*a111*Pz^2 + a11
+ 
+phi_z_tetragonal
+ 
+phi_z_tetragonal =
+ 
+4*a1111*Pz^6 + 3*a111*Pz^4 + 2*a11*Pz^2 + a1
+ 
+ezmesh(3*Pz^4+8*Pz^6, -3*Pz^2-6*Pz^4);
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',2712,0)">sym.sym>checkNoSyms at 2712</a>
+Too many sym objects to plot.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',2114,0)">sym.sym>sym.ezhelper at 2114</a>
+            checkNoSyms(varargin);
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\ezmesh.m',51,0)">sym.ezmesh at 51</a>
+ezhelper(@ezmesh,f,varargin{:});
+} 
+Pz
+ 
+Pz =
+ 
+Pz
+ 
+clc
+% Orthorhombic Phase Analysis of Stability Region.  Method number One will be used for numerical test using Wang coefficients %
+syms Px Py Pz;
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+Phi
+ 
+Phi =
+ 
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+phi_x=diff(Phi, Px)
+ 
+phi_x =
+ 
+2*Px*a1 + 4*Px^3*a11 + 6*Px^5*a111 + 8*Px^7*a1111 + a1122*(4*Px^3*Py^4 + 4*Px^3*Pz^4) + a112*(2*Px*Py^4 + 2*Px*Pz^4 + 4*Px^3*(Py^2 + Pz^2)) + a1112*(2*Px*Py^6 + 2*Px*Pz^6 + 6*Px^5*(Py^2 + Pz^2)) + a1123*(4*Px^3*Py^2*Pz^2 + 2*Px*Py^4*Pz^2 + 2*Px*Py^2*Pz^4) + a12*(2*Px*Py^2 + 2*Px*Pz^2) + 2*Px*Py^2*Pz^2*a123
+ 
+phi_y=diff(Phi, Py);
+phi_z=diff(Phi, Pz);
+Px=0;
+phi_x=2*Px*a1 + 4*Px^3*a11 + 6*Px^5*a111 + 8*Px^7*a1111 + a1122*(4*Px^3*Py^4 + 4*Px^3*Pz^4) + a112*(2*Px*Py^4 + 2*Px*Pz^4 + 4*Px^3*(Py^2 + Pz^2)) + a1112*(2*Px*Py^6 + 2*Px*Pz^6 + 6*Px^5*(Py^2 + Pz^2)) + a1123*(4*Px^3*Py^2*Pz^2 + 2*Px*Py^4*Pz^2 + 2*Px*Py^2*Pz^4) + a12*(2*Px*Py^2 + 2*Px*Pz^2) + 2*Px*Py^2*Pz^2*a123
+ 
+phi_x =
+ 
+0
+ 
+phi_y
+ 
+phi_y =
+ 
+2*Py*a1 + 4*Py^3*a11 + 6*Py^5*a111 + 8*Py^7*a1111 + a1122*(4*Px^4*Py^3 + 4*Py^3*Pz^4) + a112*(2*Px^4*Py + 2*Py*Pz^4 + 4*Py^3*(Px^2 + Pz^2)) + a1112*(2*Px^6*Py + 2*Py*Pz^6 + 6*Py^5*(Px^2 + Pz^2)) + a1123*(2*Px^4*Py*Pz^2 + 4*Px^2*Py^3*Pz^2 + 2*Px^2*Py*Pz^4) + a12*(2*Py*Px^2 + 2*Py*Pz^2) + 2*Px^2*Py*Pz^2*a123
+ 
+phi_y=2*Py*a1 + 4*Py^3*a11 + 6*Py^5*a111 + 8*Py^7*a1111 + a1122*(4*Px^4*Py^3 + 4*Py^3*Pz^4) + a112*(2*Px^4*Py + 2*Py*Pz^4 + 4*Py^3*(Px^2 + Pz^2)) + a1112*(2*Px^6*Py + 2*Py*Pz^6 + 6*Py^5*(Px^2 + Pz^2)) + a1123*(2*Px^4*Py*Pz^2 + 4*Px^2*Py^3*Pz^2 + 2*Px^2*Py*Pz^4) + a12*(2*Py*Px^2 + 2*Py*Pz^2) + 2*Px^2*Py*Pz^2*a123
+ 
+phi_y =
+ 
+2*Py*a1 + a112*(4*Py^3*Pz^2 + 2*Py*Pz^4) + a1112*(6*Py^5*Pz^2 + 2*Py*Pz^6) + 4*Py^3*a11 + 6*Py^5*a111 + 8*Py^7*a1111 + 4*Py^3*Pz^4*a1122 + 2*Py*Pz^2*a12
+ 
+phi_z
+ 
+phi_z =
+ 
+2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z=2*Pz*a1 + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + a1122*(4*Px^4*Pz^3 + 4*Py^4*Pz^3) + a112*(2*Px^4*Pz + 2*Py^4*Pz + 4*Pz^3*(Px^2 + Py^2)) + a1112*(2*Px^6*Pz + 2*Py^6*Pz + 6*Pz^5*(Px^2 + Py^2)) + a1123*(2*Px^4*Py^2*Pz + 2*Px^2*Py^4*Pz + 4*Px^2*Py^2*Pz^3) + a12*(2*Pz*Px^2 + 2*Pz*Py^2) + 2*Px^2*Py^2*Pz*a123
+ 
+phi_z =
+ 
+2*Pz*a1 + a112*(2*Py^4*Pz + 4*Py^2*Pz^3) + a1112*(2*Py^6*Pz + 6*Py^2*Pz^5) + 4*Pz^3*a11 + 6*Pz^5*a111 + 8*Pz^7*a1111 + 4*Py^4*Pz^3*a1122 + 2*Py^2*Pz*a12
+ 
+phi_yz=diff(phi_z, Py)
+ 
+phi_yz =
+ 
+a112*(8*Py^3*Pz + 8*Py*Pz^3) + a1112*(12*Py^5*Pz + 12*Py*Pz^5) + 16*Py^3*Pz^3*a1122 + 4*Py*Pz*a12
+ 
+phi_zy=diff(phi_y, Pz)
+ 
+phi_zy =
+ 
+a112*(8*Py^3*Pz + 8*Py*Pz^3) + a1112*(12*Py^5*Pz + 12*Py*Pz^5) + 16*Py^3*Pz^3*a1122 + 4*Py*Pz*a12
+ 
+phi_yy=diff(phi_y, Py)
+ 
+phi_yy =
+ 
+2*a1 + 12*Py^2*a11 + 30*Py^4*a111 + 56*Py^6*a1111 + 2*Pz^2*a12 + a112*(12*Py^2*Pz^2 + 2*Pz^4) + a1112*(30*Py^4*Pz^2 + 2*Pz^6) + 12*Py^2*Pz^4*a1122
+ 
+phi_zz=diff(phi_z, Pz)
+ 
+phi_zz =
+ 
+2*a1 + 2*Py^2*a12 + 12*Pz^2*a11 + 30*Pz^4*a111 + 56*Pz^6*a1111 + a112*(2*Py^4 + 12*Py^2*Pz^2) + a1112*(2*Py^6 + 30*Py^2*Pz^4) + 12*Py^4*Pz^2*a1122
+ 
+phi_xy=diff(phi_y, Px)
+ 
+phi_xy =
+ 
+2*Py*a1 + a112*(4*Py^3*Pz^2 + 2*Py*Pz^4) + a1112*(6*Py^5*Pz^2 + 2*Py*Pz^6) + 4*Py^3*a11 + 6*Py^5*a111 + 8*Py^7*a1111 + 4*Py^3*Pz^4*a1122 + 2*Py*Pz^2*a12
+ 
+syms Px;
+phi_xy=diff(phi_y, Px)
+ 
+phi_xy =
+ 
+0
+ 
+phi_zy=diff(phi_y, Pz)
+ 
+phi_zy =
+ 
+a112*(8*Py^3*Pz + 8*Py*Pz^3) + a1112*(12*Py^5*Pz + 12*Py*Pz^5) + 16*Py^3*Pz^3*a1122 + 4*Py*Pz*a12
+ 
+phi_xz=diff(phi_z, Px)
+ 
+phi_xz =
+ 
+0
+ 
+Py=P/(2^(1/2));
+Pz=P/(2^(1/2));
+phi_yy=2*a1 + 12*Py^2*a11 + 30*Py^4*a111 + 56*Py^6*a1111 + 2*Pz^2*a12 + a112*(12*Py^2*Pz^2 + 2*Pz^4) + a1112*(30*Py^4*Pz^2 + 2*Pz^6) + 12*Py^2*Pz^4*a1122
+ 
+phi_yy =
+ 
+2*a1 + 6*P^2*a11 + (15*P^4*a111)/2 + (7*P^4*a112)/2 + 7*P^6*a1111 + 4*P^6*a1112 + (3*P^6*a1122)/2 + P^2*a12
+ 
+phi_zz=2*a1 + 2*Py^2*a12 + 12*Pz^2*a11 + 30*Pz^4*a111 + 56*Pz^6*a1111 + a112*(2*Py^4 + 12*Py^2*Pz^2) + a1112*(2*Py^6 + 30*Py^2*Pz^4) + 12*Py^4*Pz^2*a1122
+ 
+phi_zz =
+ 
+2*a1 + 6*P^2*a11 + (15*P^4*a111)/2 + (7*P^4*a112)/2 + 7*P^6*a1111 + 4*P^6*a1112 + (3*P^6*a1122)/2 + P^2*a12
+ 
+phi_yy==phi_zz
+
+ans =
+
+     1
+
+phi_yz=a112*(8*Py^3*Pz + 8*Py*Pz^3) + a1112*(12*Py^5*Pz + 12*Py*Pz^5) + 16*Py^3*Pz^3*a1122 + 4*Py*Pz*a12
+ 
+phi_yz =
+ 
+4*P^4*a112 + 3*P^6*a1112 + 2*P^6*a1122 + 2*P^2*a12
+ 
+phi_zy=a112*(8*Py^3*Pz + 8*Py*Pz^3) + a1112*(12*Py^5*Pz + 12*Py*Pz^5) + 16*Py^3*Pz^3*a1122 + 4*Py*Pz*a12
+ 
+phi_zy =
+ 
+4*P^4*a112 + 3*P^6*a1112 + 2*P^6*a1122 + 2*P^2*a12
+ 
+phi_yz==phi_zy
+
+ans =
+
+     1
+
+phi_zz
+ 
+phi_zz =
+ 
+2*a1 + 6*P^2*a11 + (15*P^4*a111)/2 + (7*P^4*a112)/2 + 7*P^6*a1111 + 4*P^6*a1112 + (3*P^6*a1122)/2 + P^2*a12
+ 
+pretty(phi_zz)
+ 
+                        4           4                                     6 
+            2       15 P  a111   7 P  a112      6            6         3 P  a1122    2 
+  2 a1 + 6 P  a11 + ---------- + --------- + 7 P  a1111 + 4 P  a1112 + ---------- + P  a12 
+                        2            2                                     2
+pretty(phi_yz)
+ 
+     4           6            6            2 
+  4 P  a112 + 3 P  a1112 + 2 P  a1122 + 2 P  a12
+phi_y
+ 
+phi_y =
+ 
+2*Py*a1 + a112*(4*Py^3*Pz^2 + 2*Py*Pz^4) + a1112*(6*Py^5*Pz^2 + 2*Py*Pz^6) + 4*Py^3*a11 + 6*Py^5*a111 + 8*Py^7*a1111 + 4*Py^3*Pz^4*a1122 + 2*Py*Pz^2*a12
+ 
+phi_z_orthorhombic
+ 
+phi_z_orthorhombic =
+ 
+(a1111/2 + a1112/2 + a1122/4)*P^6 + ((3*a111)/4 + (3*a112)/4)*P^4 + (a11 + a12/2)*P^2 + a1
+ 
+pretty(phi_z_orthorhombic)
+ 
+  / a1111   a1112   a1122 \  6   / 3 a111   3 a112 \  4   /       a12 \  2 
+  | ----- + ----- + ----- | P  + | ------ + ------ | P  + | a11 + --- | P  + a1 
+  \   2       2       4   /      \   4        4    /      \        2  /
+pretty(simplify(phi_z_orthorhombic.*2))
+ 
+            2 /       a12 \      6 / a1111   a1112   a1122 \      4 / 3 a111   3 a112 \ 
+  2 a1 + 2 P  | a11 + --- | + 2 P  | ----- + ----- + ----- | + 2 P  | ------ + ------ | 
+              \        2  /        \   2       2       4   /        \   4        4    /
+syms A B C;
+solve(A*P^3+B*P^2+C*P+2*a1, P)
+ 
+ans =
+ 
+                                                                                                                                                                                                                                                                                                       (((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) - (C/(3*A) - B^2/(9*A^2))/(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) - B/(3*A)
+ (C/(3*A) - B^2/(9*A^2))/(2*(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3)) - B/(3*A) - (((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3)/2 - (3^(1/2)*((C/(3*A) - B^2/(9*A^2))/(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) + (((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3))*i)/2
+ (C/(3*A) - B^2/(9*A^2))/(2*(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3)) - B/(3*A) - (((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3)/2 + (3^(1/2)*((C/(3*A) - B^2/(9*A^2))/(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) + (((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3))*i)/2
+ 
+pretty(ans(1))
+ 
+                                                                                                                    2 
+                                                                         1                                   C     B 
+                                                                         -                                  --- - ---- 
+  / / /        3          \2   /         2  \3 \1/2     3               \3                                  3 A      2 
+  | | | a1    B      B C  |    |  C     B   |  |       B      a1   B C  |                                         9 A                                    B 
+  | | | -- + ----- - ---- |  + | --- - ---- |  |    - ----- - -- + ---- |  - ------------------------------------------------------------------------ - --- 
+  | | | A        3      2 |    | 3 A      2 |  |          3   A       2 |                                                                           1   3 A 
+  \ \ \      27 A    6 A  /    \       9 A  /  /      27 A         6 A  /                                                                           - 
+                                                                             / / /        3          \2   /         2  \3 \1/2     3               \3 
+                                                                             | | | a1    B      B C  |    |  C     B   |  |       B      a1   B C  | 
+                                                                             | | | -- + ----- - ---- |  + | --- - ---- |  |    - ----- - -- + ---- | 
+                                                                             | | | A        3      2 |    | 3 A      2 |  |          3   A       2 | 
+                                                                             \ \ \      27 A    6 A  /    \       9 A  /  /      27 A         6 A  /
+simplify(ans(1))
+ 
+ans =
+ 
+(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) - (C/(3*A) - B^2/(9*A^2))/(((a1/A + B^3/(27*A^3) - (B*C)/(6*A^2))^2 + (C/(3*A) - B^2/(9*A^2))^3)^(1/2) - B^3/(27*A^3) - a1/A + (B*C)/(6*A^2))^(1/3) - B/(3*A)
+ 
+pretty(ans)
+ 
+                                                                                                                    2 
+                                                                         1                                   C     B 
+                                                                         -                                  --- - ---- 
+  / / /        3          \2   /         2  \3 \1/2     3               \3                                  3 A      2 
+  | | | a1    B      B C  |    |  C     B   |  |       B      a1   B C  |                                         9 A                                    B 
+  | | | -- + ----- - ---- |  + | --- - ---- |  |    - ----- - -- + ---- |  - ------------------------------------------------------------------------ - --- 
+  | | | A        3      2 |    | 3 A      2 |  |          3   A       2 |                                                                           1   3 A 
+  \ \ \      27 A    6 A  /    \       9 A  /  /      27 A         6 A  /                                                                           - 
+                                                                             / / /        3          \2   /         2  \3 \1/2     3               \3 
+                                                                             | | | a1    B      B C  |    |  C     B   |  |       B      a1   B C  | 
+                                                                             | | | -- + ----- - ---- |  + | --- - ---- |  |    - ----- - -- + ---- | 
+                                                                             | | | A        3      2 |    | 3 A      2 |  |          3   A       2 | 
+                                                                             \ \ \      27 A    6 A  /    \       9 A  /  /      27 A         6 A  /
+clc
+% Numerical Analysis of Orthorhombic Stability Relations from Method One %
+phi_zy
+ 
+phi_zy =
+ 
+4*P^4*a112 + 3*P^6*a1112 + 2*P^6*a1122 + 2*P^2*a12
+ 
+phi_zz
+ 
+phi_zz =
+ 
+2*a1 + 6*P^2*a11 + (15*P^4*a111)/2 + (7*P^4*a112)/2 + 7*P^6*a1111 + 4*P^6*a1112 + (3*P^6*a1122)/2 + P^2*a12
+ 
+R5=phi_zz;
+R3=phi_zy;
+T=[0:450];
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+phi_z_orthorhombic
+ 
+phi_z_orthorhombic =
+ 
+(a1111/2 + a1112/2 + a1122/4)*P^6 + ((3*a111)/4 + (3*a112)/4)*P^4 + (a11 + a12/2)*P^2 + a1
+ 
+solve((a1111/2 + a1112/2 + a1122/4)*P^3 + ((3*a111)/4 + (3*a112)/4)*P^2 + (a11 + a12/2)*P + a1 , P);
+{Warning: 451 equations in 1 variables. } 
+{Warning: Explicit solution could not be found.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\solve.m',81,1)">solve at 81</a>
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+solve((a1111/2 + a1112/2 + a1122/4)*P^3 + ((3*a111)/4 + (3*a112)/4)*P^2 + (a11 + a12/2)*P + a1 , P);
+P=ans(1).^(1/2);
+T=[0:450];
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+P
+ 
+P =
+ 
+((((((3*a111)/4 + (3*a112)/4)^3/(27*(a1111/2 + a1112/2 + a1122/4)^3) + a1/(2*(a1111/2 + a1112/2 + a1122/4)) - ((a11 + a12/2)*((3*a111)/4 + (3*a112)/4))/(6*(a1111/2 + a1112/2 + a1122/4)^2))^2 - (((3*a111)/4 + (3*a112)/4)^2/(9*(a1111/2 + a1112/2 + a1122/4)^2) - (a11 + a12/2)/((3*a1111)/2 + (3*a1112)/2 + (3*a1122)/4))^3)^(1/2) - ((3*a111)/4 + (3*a112)/4)^3/(27*(a1111/2 + a1112/2 + a1122/4)^3) - a1/(2*(a1111/2 + a1112/2 + a1122/4)) + ((a11 + a12/2)*((3*a111)/4 + (3*a112)/4))/(6*(a1111/2 + a1112/2 + a1122/4)^2))^(1/3) - ((3*a111)/4 + (3*a112)/4)/(3*(a1111/2 + a1112/2 + a1122/4)) + (((3*a111)/4 + (3*a112)/4)^2/(9*(a1111/2 + a1112/2 + a1122/4)^2) - (a11 + a12/2)/(3*(a1111/2 + a1112/2 + a1122/4)))/(((((3*a111)/4 + (3*a112)/4)^3/(27*(a1111/2 + a1112/2 + a1122/4)^3) + a1/(2*(a1111/2 + a1112/2 + a1122/4)) - ((a11 + a12/2)*((3*a111)/4 + (3*a112)/4))/(6*(a1111/2 + a1112/2 + a1122/4)^2))^2 - (((3*a111)/4 + (3*a112)/4)^2/(9*(a1111/2 + a1112/2 + a1122/4)^2) - (a11 + a12/2)/((3*a1111)/2 + (3*a1112)/2 + (3*a1122)/4))^3)^(1/2) - ((3*a111)/4 + (3*a112)/4)^3/(27*(a1111/2 + a1112/2 + a1122/4)^3) - a1/(2*(a1111/2 + a1112/2 + a1122/4)) + ((a11 + a12/2)*((3*a111)/4 + (3*a112)/4))/(6*(a1111/2 + a1112/2 + a1122/4)^2))^(1/3))^(1/2)
+ 
+P_orthorhombic_W=((((((3*a111)/4 + (3*a112)/4).^3./(27*(a1111/2 + a1112/2 + a1122/4).^3) + a1./(2*(a1111/2 + a1112/2 + a1122/4)) - ((a11 + a12/2).*((3*a111)/4 + (3*a112)/4))./(6*(a1111/2 + a1112/2 + a1122/4).^2)).^2 - (((3*a111)/4 + (3*a112)/4).^2./(9*(a1111/2 + a1112/2 + a1122/4).^2) - (a11 + a12/2)./((3*a1111)/2 + (3*a1112)/2 + (3*a1122)/4)).^3).^(1/2) - ((3*a111)/4 + (3*a112)/4).^3./(27*(a1111/2 + a1112/2 + a1122/4).^3) - a1./(2*(a1111/2 + a1112/2 + a1122/4)) + ((a11 + a12/2).*((3*a111)/4 + (3*a112)/4))./(6*(a1111/2 + a1112/2 + a1122/4).^2)).^(1/3) - ((3*a111)/4 + (3*a112)/4)./(3*(a1111/2 + a1112/2 + a1122/4)) + (((3*a111)/4 + (3*a112)/4).^2./(9*(a1111/2 + a1112/2 + a1122/4).^2) - (a11 + a12/2)./(3*(a1111/2 + a1112/2 + a1122/4)))./(((((3*a111)/4 + (3*a112)/4).^3./(27*(a1111/2 + a1112/2 + a1122/4).^3) + a1./(2*(a1111/2 + a1112/2 + a1122/4)) - ((a11 + a12/2).*((3*a111)/4 + (3*a112)/4))./(6*(a1111/2 + a1112/2 + a1122/4).^2)).^2 - (((3*a111)/4 + (3*a112)/4).^2./(9*(a1111/2 + a1112/2 + a1122/4).^2) - (a11 + a12/2)./((3*a1111)/2 + (3*a1112)/2 + (3*a1122)/4)).^3).^(1/2) - ((3*a111)/4 + (3*a112)/4).^3./(27*(a1111/2 + a1112/2 + a1122/4).^3) - a1./(2*(a1111/2 + a1112/2 + a1122/4)) + ((a11 + a12/2).*((3*a111)/4 + (3*a112)/4))./(6*(a1111/2 + a1112/2 + a1122/4).^2)).^(1/3)).^(1/2);
+P=P_orthorhombic_W;
+R5
+ 
+R5 =
+ 
+2*a1 + 6*P^2*a11 + (15*P^4*a111)/2 + (7*P^4*a112)/2 + 7*P^6*a1111 + 4*P^6*a1112 + (3*P^6*a1122)/2 + P^2*a12
+ 
+R5_Evaluated=2*a1 + 6*P.^2.*a11 + (15*P.^4.*a111)/2 + (7*P.^4*a112)/2 + 7*P.^6*a1111 + 4*P.^6*a1112 + (3*P.^6*a1122)/2 + P.^2.*a12;
+R3
+ 
+R3 =
+ 
+4*P^4*a112 + 3*P^6*a1112 + 2*P^6*a1122 + 2*P^2*a12
+ 
+R3=4*P.^4*a112 + 3*P.^6*a1112 + 2*P.^6*a1122 + 2*P.^2.*a12;
+R3_Evaluated=4*P.^4*a112 + 3*P.^6*a1112 + 2*P.^6*a1122 + 2*P.^2.*a12;
+plot(T, R5_Evaluated); hold on; plot(T, 0*T); plot(T, [R5_Evaluated.^2-R3_Evaluated.^2]);
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+plot(T, R5_Evaluated.^2)
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+syms P;
+syms Px Py Pz;
+Py
+ 
+Py =
+ 
+Py
+ 
+clc
+% Orthorhombic Stability Range evaluated using Method 1 resulted in R4 vanishing which was the lower bound.  Using method 1 removed the lower bound for both the Tetragonal and Orthorhombic phases. %
+% Now switching back to the C-T stability range using analytical approach with comparison to known lattice constant values as a function of temperature. %
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+R2_simplified
+ 
+R2_simplified =
+ 
+6*a1111*Pz^4 + 3*a111*Pz^2 + a11
+ 
+para_x=-6*a1111*Pz^4 -3*a111*Pz^2;
+para_y= 8*a1111*Pz^6 +3*a111*Pz^4;
+% Let a1111=a111=1 
+ a111=1; a1111=1;
+para_x=-6*a1111*Pz^4 -3*a111*Pz^2;
+para_y= 8*a1111*Pz^6 +3*a111*Pz^4;
+ezplot(para_x, para_y, Pz, [0, 0.2]);
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\ezplot.m',83,0)">sym.ezplot>checkNoSyms at 83</a>
+Too many sym objects to plot.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\ezplot.m',74,0)">sym.ezplot at 74</a>
+   checkNoSyms(varargin(2:end));
+} 
+para_x
+ 
+para_x =
+ 
+- 6*Pz^4 - 3*Pz^2
+ 
+para_y
+ 
+para_y =
+ 
+8*Pz^6 + 3*Pz^4
+ 
+Pz=[0:0.4];
+para_x=-6*a1111*Pz^4 -3*a111*Pz^2;
+para_y= 8*a1111*Pz^6 +3*a111*Pz^4;
+ezplot(para_x, para_y, Pz, [0, 0.2]);
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezplot.m',70,0)">ezplot at 70</a>
+Input must be a string expression, function name, function handle, or INLINE object.
+} 
+ezplot('para_x', 'para_y', 'Pz', [0, 0.2]);
+{??? Error using ==> times
+Matrix dimensions must agree.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\elmat\linspace.m',26,0)">linspace at 26</a>
+    y = [d1 + (vec.*(d2-d1)/n1), d2];
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezplot.m',372,0)">ezplot>ezparam at 372</a>
+                T = linspace(varargin{1}, varargin{2}, Npts);
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezplot.m',165,0)">ezplot at 165</a>
+        hp = ezparam(cax, f{1}, f{2}, vars, labels, args{2:end});
+} 
+diary off
+phi_z_tetragonal
+ 
+phi_z_tetragonal =
+ 
+4*a1111*Pz^6 + 3*a111*Pz^4 + 2*a11*Pz^2 + a1
+ 
+syms a_1 a_11 a_111 a_1111 a_12 a_112 a_1112 a_1122;
+syms P_z P_x P_y;
+a1=a_1; a11=a_11; a111=a_111; a1111=a_1111; Pz=P_z;
+diary off;

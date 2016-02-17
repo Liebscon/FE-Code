@@ -1,0 +1,175 @@
+diary on
+
+% Final attempt to finish Mc phase evaluation
+
+
+% Since Mc is a metastable phase the free energy expansion must be taken with respect to U nearly equal to zero. This will give T1 for T-Mc metastable transition.
+
+Phi_Monoclinic=a11*(P^4*(U - 1)^2 + P^4*U^2) - a111*(P^6*(U - 1)^3 - P^6*U^3) + a1111*(P^8*(U - 1)^4 + P^8*U^4) + a112*(P^6*U*(U - 1)^2 - P^6*U^2*(U - 1)) - a1112*(P^8*U*(U - 1)^3 + P^8*U^3*(U - 1)) + a1*(P^2*U - P^2*(U - 1)) + P^8*U^2*a1122*(U - 1)^2 - P^4*U*a12*(U - 1);
+Phi
+ 
+Phi =
+ 
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+syms Pz; Py=0; Px=0;
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+ans =
+ 
+a1111*Pz^8 + a111*Pz^6 + a11*Pz^4 + a1*Pz^2
+ 
+Pz=Pz_Tetragonal;
+Phi_Tetragonal=a1111*Pz^8 + a111*Pz^6 + a11*Pz^4 + a1*Pz^2;
+% Modify expression to add input arguments.
+% Example:
+%   a = [1 2 3; 4 5 6]; 
+%   foo(a);
+
+FE_Editor
+% Modify expression to add input arguments.
+% Example:
+%   a = [1 2 3; 4 5 6]; 
+%   foo(a);
+
+FE_Editor
+Pz_Tetragonal
+ 
+Pz_Tetragonal =
+ 
+(T/6050 + ((((361*T)/387200000 + ((32000000*T - 13900000000)*(4000000*T - 1830000000))/37480960000000000000000 - (32000000*T - 13900000000)^3/7256313855999999738390380904710144 - 141151/387200000)^2 - ((32000000*T - 13900000000)^2/37480960000000000000000 - T/72600 + 61/9680)^3)^(1/2) - ((32000000*T - 13900000000)*(4000000*T - 1830000000))/37480960000000000000000 - (361*T)/387200000 + (32000000*T - 13900000000)^3/7256313855999999738390380904710144 + 141151/387200000)^(1/3) + ((32000000*T - 13900000000)^2/37480960000000000000000 - T/72600 + 61/9680)/((((361*T)/387200000 + ((32000000*T - 13900000000)*(4000000*T - 1830000000))/37480960000000000000000 - (32000000*T - 13900000000)^3/7256313855999999738390380904710144 - 141151/387200000)^2 - ((32000000*T - 13900000000)^2/37480960000000000000000 - T/72600 + 61/9680)^3)^(1/2) - ((32000000*T - 13900000000)*(4000000*T - 1830000000))/37480960000000000000000 - (361*T)/387200000 + (32000000*T - 13900000000)^3/7256313855999999738390380904710144 + 141151/387200000)^(1/3) - 139/1936)^(1/2)
+ 
+Pz=Pz_Tetragonal;
+Phi_Tetragonal=a1111*Pz^8 + a111*Pz^6 + a11*Pz^4 + a1*Pz^2;
+Phi_Monoclinic=a11*(P^4*(U - 1)^2 + P^4*U^2) - a111*(P^6*(U - 1)^3 - P^6*U^3) + a1111*(P^8*(U - 1)^4 + P^8*U^4) + a112*(P^6*U*(U - 1)^2 - P^6*U^2*(U - 1)) - a1112*(P^8*U*(U - 1)^3 + P^8*U^3*(U - 1)) + a1*(P^2*U - P^2*(U - 1)) + P^8*U^2*a1122*(U - 1)^2 - P^4*U*a12*(U - 1);
+
+
+
+U=0.000001;
+P_Monoclinic_z
+ 
+P_Monoclinic_z =
+ 
+((((a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) + (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) - ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^2 + ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^3)^(1/2) - a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) + ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^(1/3) - ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))/(((a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) + (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) - ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^2 + ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^3)^(1/2) - a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) + ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^(1/3) - (a112 + 3*U^2*a111 - U^2*a112)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)))^(1/2)
+ 
+P_Monoclinic_z=((((a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) + (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) - ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^2 + ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^3)^(1/2) - a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) + ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^(1/3) - ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))/(((a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) + (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) - ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^2 + ((a12 + 2*U*a11 - U*a12)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^2/(9*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^3)^(1/2) - a1/(2*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)) - (a112 + 3*U^2*a111 - U^2*a112)^3/(27*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^3) + ((a112 + 3*U^2*a111 - U^2*a112)*(a12 + 2*U*a11 - U*a12))/(6*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)^2))^(1/3) - (a112 + 3*U^2*a111 - U^2*a112)/(3*(a1112 - 3*U*a1112 + 2*U*a1122 + 6*U^2*a1112 + 4*U^3*a1111 - 4*U^2*a1122 - 4*U^3*a1112 + 2*U^3*a1122)))^(1/2);
+Phi_Monoclinic=a11*(P^4*(U - 1)^2 + P^4*U^2) - a111*(P^6*(U - 1)^3 - P^6*U^3) + a1111*(P^8*(U - 1)^4 + P^8*U^4) + a112*(P^6*U*(U - 1)^2 - P^6*U^2*(U - 1)) - a1112*(P^8*U*(U - 1)^3 + P^8*U^3*(U - 1)) + a1*(P^2*U - P^2*(U - 1)) + P^8*U^2*a1122*(U - 1)^2 - P^4*U*a12*(U - 1);
+hold on;
+ezplot(Phi_Tetragonal, [0, 420]); ezplot(Phi_Monoclinic, [0, 420]);
+
+------------------------------------------------------------------------
+       Segmentation violation detected at Thu Oct 09 09:40:46 2014
+------------------------------------------------------------------------
+
+Configuration:
+  MATLAB Version:   7.11.0.584 (R2010b)
+  MATLAB License:   161051
+  Operating System: Microsoft Windows 7
+  Window System:    Version 6.2 (Build 9200)
+  Processor ID:     x86 Family 6 Model 10 Stepping 9, GenuineIntel
+  Virtual Machine:  Java 1.6.0_17-b04 with Sun Microsystems Inc. Java HotSpot(TM) 64-Bit Server VM mixed mode
+  Default Encoding:  windows-1252
+
+Fault Count: 1
+
+
+
+Abnormal termination:
+
+
+Register State (from fault):
+  RAX = 000000004bcb7500  RBX = 0000000000000040
+  RCX = 000000003644e540  RDX = 000000004bc72fb0
+  RSP = 000000000143a170  RBP = 000000004bcb7500
+  RSI = 00000000058e5e40  RDI = 000000004bd74a50
+ 
+   R8 = 0000000000000001   R9 = 000000004c12f8d0
+  R10 = 00000000058dfc20  R11 = 0000000000000000
+  R12 = 000000004bd74a50  R13 = ffffffff80000000
+  R14 = 000000004bd74a50  R15 = 00000000000000fb
+ 
+  RIP = 000000007c815cd3  EFL = 00010206
+ 
+   CS = 0033   FS = 0053   GS = 002b
+
+
+Stack Trace (from fault):
+[  0] 0x000000007c815cd3   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00220371 ( ColorPtr2RGB+000275 )
+[  1] 0x000000007d732716 C:/Program Files/MATLAB/R2010b/bin/win64/libmwgui.dll+00403222 ( wm_ColormapIndex2ColorPtr+000262 )
+[  2] 0x0000000079693602    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04470274 ( getPatchVertexData+007170 )
+[  3] 0x000000007969c42a    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04506666 ( getNumVertices+010394 )
+[  4] 0x0000000079727828    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+05077032 ( gsDoMexGet+001224 )
+[  5] 0x000000007960251a    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+03876122 ( getARDonAxis+025530 )
+[  6] 0x00000000796082c3    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+03900099 ( getARDonAxis+049507 )
+[  7] 0x0000000079727828    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+05077032 ( gsDoMexGet+001224 )
+[  8] 0x00000000796263c2    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04023234 ( FigureSetVisualAutoMode+001058 )
+[  9] 0x000000007962cdc7    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04050375 ( UIJ_CreatePeerWindow+001623 )
+[ 10] 0x0000000079727828    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+05077032 ( gsDoMexGet+001224 )
+[ 11] 0x0000000079628ea7    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04034215 ( FigureSetVisualAutoMode+012039 )
+[ 12] 0x0000000079628f2d    C:/Program Files/MATLAB/R2010b/bin/win64/hg.dll+04034349 ( FigureSetVisualAutoMode+012173 )
+[ 13] 0x000000007d73fa02 C:/Program Files/MATLAB/R2010b/bin/win64/libmwgui.dll+00457218 ( wm_ExposeFcn_Pre_Optional+000530 )
+[ 14] 0x000000007ac5d8d4 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00186580 ( GetframeJava+001364 )
+[ 15] 0x000000007ac609c6 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00199110 ( UIJ_IsWindowShowing+000918 )
+[ 16] 0x000000007ac625dd C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00206301 ( UIJ_clearWaitForResize+003693 )
+[ 17] 0x000000007ac627fe C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00206846 ( UIJ_ExposeFcn+000206 )
+[ 18] 0x000000007ac3956e C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00038254 ( UIJ_MarkEventFinished+006030 )
+[ 19] 0x000000007ac39633 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00038451 ( UIJ_MarkEventFinished+006227 )
+[ 20] 0x000000007ac5a12c C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00172332 ( uij::JavaDraw2D::paintQuadStrip+001628 )
+[ 21] 0x000000007c7519df   C:/Program Files/MATLAB/R2010b/bin/win64/udd.dll+00203231 ( uddSetListenerRecursionWarning+000751 )
+[ 22] 0x000000007c7521bc   C:/Program Files/MATLAB/R2010b/bin/win64/udd.dll+00205244 ( UDListenerManagerHost::notifyEvent+000076 )
+[ 23] 0x000000007c747ecd   C:/Program Files/MATLAB/R2010b/bin/win64/udd.dll+00163533 ( UDEventInfo::send+000093 )
+[ 24] 0x000000007b18b2c7 C:/Program Files/MATLAB/R2010b/bin/win64/udd_mi.dll+00045767 ( MErrorException::operator=+041575 )
+[ 25] 0x000000007c84dd0e   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00449806 ( UIW_IsUserMessage+000110 )
+[ 26] 0x000000007c84e464   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00451684 ( ws_ProcessPendingEventsWaitForWindows+000356 )
+[ 27] 0x00007ffdec70bbae                     C:/WINDOWS/system32/USER32.dll+00572334 ( BroadcastSystemMessageExA+000558 )
+[ 28] 0x00007ffdec683785                     C:/WINDOWS/system32/USER32.dll+00014213 ( MsgWaitForMultipleObjects+000229 )
+[ 29] 0x00007ffdec6837f6                     C:/WINDOWS/system32/USER32.dll+00014326 ( MsgWaitForMultipleObjects+000342 )
+[ 30] 0x00007ffded3ccb1f                      C:/WINDOWS/SYSTEM32/ntdll.dll+00641823 ( KiUserCallbackDispatcher+000031 )
+[ 31] 0x00007ffdec68208a                     C:/WINDOWS/system32/USER32.dll+00008330 ( GetMessageW+000090 )
+[ 32] 0x00007ffdec687b24                     C:/WINDOWS/system32/USER32.dll+00031524 ( GetMessageA+000068 )
+[ 33] 0x000000007c80d4fb   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00185595 ( win_sleep+001499 )
+[ 34] 0x00000000783658d0 C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00022736 ( ioCmdLineEditSave+000336 )
+[ 35] 0x0000000078365eab C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00024235 ( ioCmdLineEditSave+001835 )
+[ 36] 0x000000007836637c C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00025468 ( ioCmdLineEditSave+003068 )
+[ 37] 0x000000007836e4cc C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00058572 ( QueryMLFcnTable_libmwbridge+020652 )
+[ 38] 0x000000007836e66a C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00058986 ( QueryMLFcnTable_libmwbridge+021066 )
+[ 39] 0x000000007836ecd6 C:/Program Files/MATLAB/R2010b/bin/win64/libmwbridge.dll+00060630 ( mnParser+000326 )
+[ 40] 0x000000007b102e74   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00274036 ( mcrInstance::mnParser_on_interpreter_thread+000036 )
+[ 41] 0x000000007b0de6eb   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00124651 ( mvm::detail::RecursiveScopedMcrLock::~RecursiveScopedMcrLock+052907 )
+[ 42] 0x000000007b0d9d22   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00105762 ( mvm::detail::RecursiveScopedMcrLock::~RecursiveScopedMcrLock+034018 )
+[ 43] 0x000000007c84dd0e   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00449806 ( UIW_IsUserMessage+000110 )
+[ 44] 0x000000007c84e464   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00451684 ( ws_ProcessPendingEventsWaitForWindows+000356 )
+[ 45] 0x00007ffdec70bbae                     C:/WINDOWS/system32/USER32.dll+00572334 ( BroadcastSystemMessageExA+000558 )
+[ 46] 0x00007ffdec683785                     C:/WINDOWS/system32/USER32.dll+00014213 ( MsgWaitForMultipleObjects+000229 )
+[ 47] 0x00007ffdec6837f6                     C:/WINDOWS/system32/USER32.dll+00014326 ( MsgWaitForMultipleObjects+000342 )
+[ 48] 0x00007ffded3ccb1f                      C:/WINDOWS/SYSTEM32/ntdll.dll+00641823 ( KiUserCallbackDispatcher+000031 )
+[ 49] 0x00007ffdec68208a                     C:/WINDOWS/system32/USER32.dll+00008330 ( GetMessageW+000090 )
+[ 50] 0x00007ffdec687b24                     C:/WINDOWS/system32/USER32.dll+00031524 ( GetMessageA+000068 )
+[ 51] 0x000000007c80cc17   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00183319 ( UIW_SetCurrentDialog+000855 )
+[ 52] 0x000000007c84fa97   C:/Program Files/MATLAB/R2010b/bin/win64/uiw.dll+00457367 ( ws_FreeSystemFont+000519 )
+[ 53] 0x000000007ac680af C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00229551 ( sysq::ws_ppeHook::~ws_ppeHook+011903 )
+[ 54] 0x000000007ac6a08a C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00237706 ( svWS_CommitDatabaseUpdates+003498 )
+[ 55] 0x000000007ac6ae91 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00241297 ( svWS_CommitDatabaseUpdates+007089 )
+[ 56] 0x000000007ac6b3a9 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00242601 ( svWS_CommitDatabaseUpdates+008393 )
+[ 57] 0x000000007ac6b7e2 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00243682 ( svWS_CommitDatabaseUpdates+009474 )
+[ 58] 0x000000007ac6bab7 C:/Program Files/MATLAB/R2010b/bin/win64/libuij.dll+00244407 ( svWS_CommitDatabaseUpdates+010199 )
+[ 59] 0x000000007b0dfb0c   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00129804 ( mvm::detail::RecursiveScopedMcrLock::~RecursiveScopedMcrLock+058060 )
+[ 60] 0x000000007b0e00a9   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00131241 ( mvm::detail::RecursiveScopedMcrLock::~RecursiveScopedMcrLock+059497 )
+[ 61] 0x000000007b0e091e   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00133406 ( mcr_invoke_on_interpreter_thread+000462 )
+[ 62] 0x000000007b0e1822   C:/Program Files/MATLAB/R2010b/bin/win64/mcr.dll+00137250 ( mcr_invoke_on_interpreter_thread+004306 )
+[ 63] 0x00000001400084c4 C:/Program Files/MATLAB/R2010b/bin/win64/MATLAB.exe+00033988 ( ???+000000 )
+[ 64] 0x0000000140008669 C:/Program Files/MATLAB/R2010b/bin/win64/MATLAB.exe+00034409 ( ???+000000 )
+[ 65] 0x0000000140008bcc C:/Program Files/MATLAB/R2010b/bin/win64/MATLAB.exe+00035788 ( ???+000000 )
+[ 66] 0x00007ffdeced16ad                   C:/WINDOWS/system32/KERNEL32.DLL+00005805 ( BaseThreadInitThunk+000013 )
+[ 67] 0x00007ffded3a34a5                      C:/WINDOWS/SYSTEM32/ntdll.dll+00472229 ( RtlUserThreadStart+000029 )
+
+
+
+If this problem is reproducible, please submit a Service Request via:
+    http://www.mathworks.com/support/contact_us/
+
+A technical support engineer might contact you with further information.
+
+Thank you for your help. MATLAB may attempt to recover, but even if recovery appears successful,
+we recommend that you save your workspace and restart MATLAB as soon as possible.
+
