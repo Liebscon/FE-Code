@@ -1,0 +1,644 @@
+diary on
+%Attempt 2 of Decoupling the Monoclinic Equation of State 
+%Have verified that the loss of the a1 term in the final polarization expression
+%Is alright since it is a system of equations by which the a1 term is lost from considerations
+%Of the boundary conditions for the monoclinic symmetry
+
+
+phi_y_mono
+ 
+phi_y_mono =
+ 
+a1 + Py^2*(2*a1122*Pz^4 + 2*a112*Pz^2 + 2*a11) + 4*Py^6*a1111 + Pz^4*a112 + Pz^6*a1112 + Pz^2*a12 + Py^4*(3*a1112*Pz^2 + 3*a111)
+ 
+syms Py Pz;
+phi_z_mono
+ 
+phi_z_mono =
+ 
+a1 + Pz^2*(2*a1122*Py^4 + 2*a112*Py^2 + 2*a11) + Py^4*a112 + Py^6*a1112 + Py^2*a12 + 4*Pz^6*a1111 + Pz^4*(3*a1112*Py^2 + 3*a111)
+ 
+solve(phi_y_mono, a1)
+{Warning: Explicit solution could not be found.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\solve.m',81,1)">solve at 81</a>
+ 
+ans =
+ 
+[ empty sym ]
+ 
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+solve(phi_y_mono, a1)
+ 
+ans =
+ 
+- Py^2*(2*a1122*Pz^4 + 2*a112*Pz^2 + 2*a11) - 4*Py^6*a1111 - Pz^4*a112 - Pz^6*a1112 - Pz^2*a12 - Py^4*(3*a1112*Pz^2 + 3*a111)
+ 
+a1=ans;
+phi_z_mono=a1 + Pz^2*(2*a1122*Py^4 + 2*a112*Py^2 + 2*a11) + Py^4*a112 + Py^6*a1112 + Py^2*a12 + 4*Pz^6*a1111 + Pz^4*(3*a1112*Py^2 + 3*a111)
+ 
+phi_z_mono =
+ 
+Pz^2*(2*a1122*Py^4 + 2*a112*Py^2 + 2*a11) - Py^2*(2*a1122*Pz^4 + 2*a112*Pz^2 + 2*a11) + Py^4*a112 - 4*Py^6*a1111 + Py^6*a1112 + Py^2*a12 - Pz^4*a112 + 4*Pz^6*a1111 - Pz^6*a1112 - Pz^2*a12 - Py^4*(3*a1112*Pz^2 + 3*a111) + Pz^4*(3*a1112*Py^2 + 3*a111)
+ 
+simplify(phi_z_mono)
+ 
+ans =
+ 
+-(Py^2 - Pz^2)*(2*a11 - a12 + 3*Py^2*a111 - Py^2*a112 + 4*Py^4*a1111 - Py^4*a1112 + 3*Pz^2*a111 - Pz^2*a112 + 4*Pz^4*a1111 - Pz^4*a1112 + 4*Py^2*Pz^2*a1111 + 2*Py^2*Pz^2*a1112 - 2*Py^2*Pz^2*a1122)
+ 
+%Since the first derivative is set to zero the above equation simplifies to a minimum of two solutions
+%The first solution is Py=Pz or the Orthorhombic Phase. Any other solutions correspond to a possible monoclinic Mc phase.
+
+
+EoS_mono
+ 
+EoS_mono =
+ 
+(B*(cos(theta)^4 + sin(theta)^4) + C*cos(theta)^2*sin(theta)^2)*r^2 + A*r + D
+ 
+EoS_mono=2*a11 - a12 + 3*Py^2*a111 - Py^2*a112 + 4*Py^4*a1111 - Py^4*a1112 + 3*Pz^2*a111 - Pz^2*a112 + 4*Pz^4*a1111 - Pz^4*a1112 + 4*Py^2*Pz^2*a1111 + 2*Py^2*Pz^2*a1112 - 2*Py^2*Pz^2*a1122
+ 
+EoS_mono =
+ 
+2*a11 - a12 + 3*Py^2*a111 - Py^2*a112 + 4*Py^4*a1111 - Py^4*a1112 + 3*Pz^2*a111 - Pz^2*a112 + 4*Pz^4*a1111 - Pz^4*a1112 + 4*Py^2*Pz^2*a1111 + 2*Py^2*Pz^2*a1112 - 2*Py^2*Pz^2*a1122
+ 
+%Simplifying the expression by using the simple substitution of coefficients
+
+
+pretty(EoS_mono)
+ 
+                  2          2            4           4             2          2 
+2 a11 - a12 + 3 Py  a111 - Py  a112 + 4 Py  a1111 - Py  a1112 + 3 Pz  a111 - Pz  a112 + 
+ 
+       4           4             2   2             2   2             2   2 
+   4 Pz  a1111 - Pz  a1112 + 4 Py  Pz  a1111 + 2 Py  Pz  a1112 - 2 Py  Pz  a1122
+syms A B C D;
+EoS_mono=A*(Py^2+Pz^2)+B*(Py^4+Pz^4)+C*Py^2*Pz^2+D
+ 
+EoS_mono =
+ 
+D + A*(Py^2 + Pz^2) + B*(Py^4 + Pz^4) + C*Py^2*Pz^2
+ 
+%Reducing the power of the polarization terms gives
+
+EoS_mono_reduced=A*(Py+Pz)+B*(Py^2+Pz^2)+C*Py*Pz+D
+ 
+EoS_mono_reduced =
+ 
+D + B*(Py^2 + Pz^2) + A*(Py + Pz) + C*Py*Pz
+ 
+solve(EoS_mono_reduced, Py)
+ 
+ans =
+ 
+ -(A - (A^2 - 4*A*B*Pz + 2*A*C*Pz - 4*B^2*Pz^2 - 4*D*B + C^2*Pz^2)^(1/2) + C*Pz)/(2*B)
+ -(A + (A^2 - 4*A*B*Pz + 2*A*C*Pz - 4*B^2*Pz^2 - 4*D*B + C^2*Pz^2)^(1/2) + C*Pz)/(2*B)
+ 
+solve(EoS_mono_reduced, Pz)
+ 
+ans =
+ 
+ -(A - (A^2 - 4*A*B*Py + 2*A*C*Py - 4*B^2*Py^2 - 4*D*B + C^2*Py^2)^(1/2) + C*Py)/(2*B)
+ -(A + (A^2 - 4*A*B*Py + 2*A*C*Py - 4*B^2*Py^2 - 4*D*B + C^2*Py^2)^(1/2) + C*Py)/(2*B)
+ 
+diary off
+EoS_mono_Polar=W*R^2+A*R+D
+ 
+EoS_mono_Polar =
+ 
+W*R^2 + (43900000000 - 96000000*T)*R + 1300000*T - 1420000000
+ 
+D=(2*a11-a12); A=3*a111-a112; B=4*a1111-a1112; C=4*a1111+2*a1112-2*a1122;
+solve(EoS_mono_Polar, R)
+ 
+ans =
+ 
+  (48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W
+ -(100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 48000000*T + 21950000000)/W
+ 
+simplify(ans(1))
+ 
+ans =
+ 
+(100*(480000*T + (142000*W - 210720000000000*T - 130*T*W + 230400000000*T^2 + 48180250000000000)^(1/2) - 219500000))/W
+ 
+%R^2 tends toward infinity for W=0 this occurs for theta ~= 0.65 pi/radians
+
+
+T=[0:450];
+mesh(theta,T,EoS_mono_Polar)
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\graph3d\mesh.m',80,0)">mesh at 80</a>
+Z must be a matrix, not a scalar or vector.
+} 
+syms W T;
+R1=(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W;
+ezsurf(R1)
+ezsurf(R1, [0,sym(pi/4), 200,320 ])
+{??? Undefined function or variable "h".
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',66,0)">ezgraph3 at 66</a>
+    hh = h;
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezsurf.m',65,0)">ezsurf at 65</a>
+    h = ezgraph3('surf',args{:});
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\ezsurf.m',60,0)">sym.ezsurf at 60</a>
+ezsurf(char(f),varargin{:});
+} 
+ezmesh(R1, [200,320 , 0, pi/4])
+R1=[(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2);
+ezmesh(R1, [200,320 , 0, pi/4])
+R1=@(T,W) [(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2);
+syms theta;
+W=- 258400000000*cos(theta).^4 + 258400000000*cos(theta).^2 - 59400000000;
+R1=@(T,W) [(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2);
+R1=@(T,W) [(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2)
+
+R1 = 
+
+    @(T,W)[(48000000*T+100*10^(1/2)*(14200*W-21072000000000*T-13*T*W+23040000000*T^2+4818025000000000)^(1/2)-21950000000)/W].^(1/2)
+
+R1=[(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2);
+R1=[(48000000*T + 100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 21950000000)/W].^(1/2)
+ 
+R1 =
+ 
+(-(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))^(1/2)
+ 
+R1= @(T,theta) (-(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))^(1/2);
+ezmesh(R1, [200,320 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+R2=-(100*10^(1/2)*(14200*W - 21072000000000*T - 13*T*W + 23040000000*T^2 + 4818025000000000)^(1/2) - 48000000*T + 21950000000)/W
+ 
+R2 =
+ 
+(100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 48000000*T + 21950000000)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)
+ 
+R2= @(T,theta) [(100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 48000000*T + 21950000000)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)]^(1/2);
+ezmesh(R2, [200,320 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(R2, [200,320 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+R2= @(T,theta) [(100*10^(1/2)*(3669280000000000*cos(theta).^2 - 21072000000000*T - 3669280000000000*cos(theta).^4 + 13*T.*(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000) + 23040000000*T.^2 + 3974545000000000).^(1/2) - 48000000*T + 21950000000)./(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000)].^(1/2);
+ezmesh(R2, [200,320 , 0, pi/4])
+hold off;
+ezmesh(R2, [200,320 , 0, pi/4])
+R1= @(T,theta) (-(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta).^2 - 21072000000000*T - 3669280000000000*cos(theta).^4 + 13*T.*(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000) + 23040000000*T.^2 + 3974545000000000).^(1/2) - 21950000000)./(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000)).^(1/2);
+ezmesh(R1, [200,320 , 0, pi/4])
+ezmesh(R1, [200,320 , 0, pi/4])
+ezmesh(R2, [200,320 , 0, pi/4])
+hold on;
+ezmesh(R1, [200,320 , 0, pi/4])
+%R1 is the accurate solution corresponding to the plus in the plus-minus.
+ezplot3([285,285],[0,0],[.2,.4])
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezfcnchk.m',67,0)">ezfcnchk at 67</a>
+FUN must be a function, a valid string expression, or an inline function object.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezplot3.m',55,0)">ezplot3 at 55</a>
+[x,x0,xargs] = ezfcnchk(args{1},0,'t');
+} 
+hold on;
+plot3([285,285],[0,0],[.2,.4])
+plot3([285,285],[pi/4,pi/4],[.2,.4])
+% Of Note: the above warnings during the ezmesh plotting simply state that the equation should use the matrix (.^) notation instead of the normal notation (^).
+% The function R1 is continuous over the interval from theta=0 to theta=pi/4 at T=285=T_D being the T-O phase transition temperature.
+plot3(T,[0,0],P_orthorhombic_W)
+{??? Error using ==> plot3
+Conversion to double from sym is not possible.
+} 
+T=[0:450];
+plot3(T,[0,0],P_orthorhombic_W)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+{??? Error using ==> plot3
+Vectors must be the same lengths.
+} 
+plot3(T,T.*0,P_orthorhombic_W)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+plot3(T,[sym(pi/4)],P_orthorhombic_W)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+{??? Error using ==> plot3
+Vectors must be the same lengths.
+} 
+plot3(T,(T.*0+sym(pi/4)),P_orthorhombic_W)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+plot3(T,(T.*0+sym(pi/4)),P_orthorhombic_W./2^(1/2))
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+plot3(T,T.*0,Pz_tetragonal_W)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+ezmesh(R1, [0,450 , 0, pi/4])
+{Warning: incomplete command in TeX text string:
+'M_'} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\plottools\setupplotbrowser.m',469,1)">setupplotbrowser>titlePropertySetCallback at 469</a>
+R1=P_mono;
+{??? Undefined function or variable 'P_mono'.
+} 
+clear P_mono1 P_mono2;
+sym P_mono;
+P_mono=R1;
+P_mono_W=P_mono
+
+P_mono_W = 
+
+    @(T,theta)(-(48000000*T+100*10^(1/2)*(3669280000000000*cos(theta).^2-21072000000000*T-3669280000000000*cos(theta).^4+13*T.*(258400000000*cos(theta).^4-258400000000*cos(theta).^2+59400000000)+23040000000*T.^2+3974545000000000).^(1/2)-21950000000)./(258400000000*cos(theta).^4-258400000000*cos(theta).^2+59400000000)).^(1/2)
+
+clear Pz_mono1_total_angle R_Solu Shift;
+Phi_monoclinic
+ 
+Phi_monoclinic =
+ 
+a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12
+ 
+Py=P_mono_W*sin(theta);
+{??? Error using ==> mupadmex
+Error in MuPAD command: argument must be of type 'Type::Arithmetical' [cos]
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',189,0)">sym.sym>sym.mtimes at 189</a>
+            X = mupadmex('symobj::mtimes',A.s,B.s);
+} 
+Py=P_mono_W.*sin(theta);
+{??? Error using ==> mupadmex
+Error in MuPAD command: argument must be of type 'Type::Arithmetical' [cos]
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\sym.m',175,0)">sym.sym>sym.times at 175</a>
+            X = mupadmex('symobj::zip',A.s,B.s,'_mult');
+} 
+syms T theta W;
+P_mono=(-(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta).^2 - 21072000000000*T - 3669280000000000*cos(theta).^4 + 13*T.*(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000) + 23040000000*T.^2 + 3974545000000000).^(1/2) - 21950000000)./(258400000000*cos(theta).^4 - 258400000000*cos(theta).^2 + 59400000000)).^(1/2);
+Py=P_mono.*sin(theta);
+Pz=P_mono.*cos(theta);
+phi_monoclinic=a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12;
+phi_monoclinic=a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12
+ 
+phi_monoclinic =
+ 
+(32000000*T - 13900000000)*((cos(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3) - ((cos(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + (sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))*(361000*T - 141151000) + (4000000*T - 1830000000)*((cos(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2 + (sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2) + (48400000000*cos(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (48400000000*sin(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (2200000000*cos(theta)^2*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (2200000000*cos(theta)^4*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (253000000000*cos(theta)^2*sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (280000000000*cos(theta)^4*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (253000000000*cos(theta)^6*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (cos(theta)^2*sin(theta)^2*(6700000*T - 2240000000)*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2
+ 
+phi_monoclinic= @(T,theta) (32000000*T - 13900000000)*((cos(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3) - ((cos(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + (sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))*(361000*T - 141151000) + (4000000*T - 1830000000)*((cos(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2 + (sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2) + (48400000000*cos(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (48400000000*sin(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (2200000000*cos(theta)^2*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (2200000000*cos(theta)^4*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (253000000000*cos(theta)^2*sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (280000000000*cos(theta)^4*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (253000000000*cos(theta)^6*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (cos(theta)^2*sin(theta)^2*(6700000*T - 2240000000)*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2;
+%Disregard the error for not using the .* (matrix multiplication) notation
+ezmesh(phi_monoclinic, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(phi_monoclinic*0, [0,450 , 0, pi/4])
+{??? Undefined function or method 'mtimes' for input arguments of type 'function_handle'.
+} 
+ezmesh(phi_monoclinic.*0, [0,450 , 0, pi/4])
+{??? Undefined function or method 'times' for input arguments of type 'function_handle'.
+} 
+Zero_Plane=phi_monoclinic.*0;
+{??? Undefined function or method 'times' for input arguments of type 'function_handle'.
+} 
+ezmesh([0.*phi_mono], [0,450 , 0, pi/4])
+{??? Undefined function or variable 'phi_mono'.
+} 
+Phi_tetragonal
+ 
+Phi_tetragonal =
+ 
+(4000000*T - 1830000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)
+ 
+Phi_tetragonal= @(T)(4000000*T - 1830000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936);
+plot3(T,T.*0,Phi_tetragonal)
+{??? Error using ==> plot3
+Conversion to double from sym is not possible.
+} 
+T=[0:450];
+plot3(T,T.*0,Phi_tetragonal)
+{??? Error using ==> plot3
+Conversion to double from function_handle is not possible.
+} 
+phi_monoclinic= @(T,theta) (32000000*T - 13900000000)*((cos(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3) - ((cos(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + (sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))*(361000*T - 141151000) + (4000000*T - 1830000000)*((cos(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2 + (sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2) + (48400000000*cos(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (48400000000*sin(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (2200000000*cos(theta)^2*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (2200000000*cos(theta)^4*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (253000000000*cos(theta)^2*sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (280000000000*cos(theta)^4*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (253000000000*cos(theta)^6*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (cos(theta)^2*sin(theta)^2*(6700000*T - 2240000000)*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2;
+Phi_tetragonal= @(T)(4000000*T - 1830000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936);
+plot3(T,T.*0,Phi_tetragonal)
+{??? Error using ==> plot3
+Conversion to double from function_handle is not possible.
+} 
+ezmesh(T,Phi_tetragonal)
+{??? Error using ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezfcnchk.m',67,0)">ezfcnchk at 67</a>
+FUN must be a function, a valid string expression, or an inline function object.
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',342,0)">ezgraph3>parse_inputs at 342</a>
+[fout,flabel,V] = ezfcnchk(varargin{1},1);
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',43,0)">ezgraph3 at 43</a>
+[ezflag,f,domain,domstyle,Npts,flabel,fargs,fixdomain] = parse_inputs(args{:});
+
+Error in ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,0)">ezmesh at 66</a>
+    h = ezgraph3('mesh',args{:});
+} 
+clc
+Phi_tetragonal=(4000000*T - 1830000000).*(T/6050 + (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680)./((((361*T)/387200000 - ((3*T)/6050 - 417/1936).^3/27 + (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680).^3).^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936).^3/27 - (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808).^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936).^3/27 + (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680).^3).^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936).^3/27 - (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808).^(1/3) - 139/1936);
+{??? Error using ==> mpower
+Inputs must be a scalar and a square matrix.
+} 
+simplify(Phi_tetragonal)
+
+ans = 
+
+    @(T)(4000000*T-1830000000)*(T/6050+(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)/((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)+((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)-139/1936)^2-(32000000*T-13900000000)*(T/6050+(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)/((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)+((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)-139/1936)^3+48400000000*(T/6050+(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)/((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)+((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)-139/1936)^4+(361000*T-141151000)*(T/6050+(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)/((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)+((((361*T)/387200000-((3*T)/6050-417/1936)^3/27+(((3*T)/6050-417/1936)*(T/24200-183/9680))/6-3362314530924815/9223372036854775808)^2-(((3*T)/6050-417/1936)^2/9-T/72600+61/9680)^3)^(1/2)-(361*T)/387200000+((3*T)/6050-417/1936)^3/27-(((3*T)/6050-417/1936)*(T/24200-183/9680))/6+3362314530924815/9223372036854775808)^(1/3)-139/1936)
+
+syms T;
+Phi_tetragonal=(4000000*T - 1830000000).*(T/6050 + (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680)./((((361*T)/387200000 - ((3*T)/6050 - 417/1936).^3/27 + (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680).^3).^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936).^3/27 - (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808).^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936).^3/27 + (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808).^2 - (((3*T)/6050 - 417/1936).^2/9 - T/72600 + 61/9680).^3).^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936).^3/27 - (((3*T)/6050 - 417/1936).*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808).^(1/3) - 139/1936);
+simplify(Phi_tetragonal)
+ 
+ans =
+ 
+(4000000*T - 1830000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^2 - (32000000*T - 13900000000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^3 + 48400000000*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)^4 + (361000*T - 141151000)*(T/6050 + (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)/((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) + ((((361*T)/387200000 - ((3*T)/6050 - 417/1936)^3/27 + (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 - 3362314530924815/9223372036854775808)^2 - (((3*T)/6050 - 417/1936)^2/9 - T/72600 + 61/9680)^3)^(1/2) - (361*T)/387200000 + ((3*T)/6050 - 417/1936)^3/27 - (((3*T)/6050 - 417/1936)*(T/24200 - 183/9680))/6 + 3362314530924815/9223372036854775808)^(1/3) - 139/1936)
+ 
+Phi
+ 
+Phi =
+ 
+a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+syms Pz; Px=0; Py=0;
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+Phi_tetragonal=a1*(Px^2 + Py^2 + Pz^2) + a11*(Px^4 + Py^4 + Pz^4) + a111*(Px^6 + Py^6 + Pz^6) + a1111*(Px^8 + Py^8 + Pz^8) + a1122*(Px^4*Py^4 + Px^4*Pz^4 + Py^4*Pz^4) + a12*(Px^2*Py^2 + Px^2*Pz^2 + Py^2*Pz^2) + a1123*(Px^4*Py^2*Pz^2 + Px^2*Py^4*Pz^2 + Px^2*Py^2*Pz^4) + a112*(Px^4*(Py^2 + Pz^2) + Py^4*(Px^2 + Pz^2) + Pz^4*(Px^2 + Py^2)) + a1112*(Px^6*(Py^2 + Pz^2) + Py^6*(Px^2 + Pz^2) + Pz^6*(Px^2 + Py^2)) + Px^2*Py^2*Pz^2*a123
+ 
+Phi_tetragonal =
+ 
+a1111*Pz^8 + a111*Pz^6 + a11*Pz^4 + a1*Pz^2
+ 
+Pz=Pz_tetragonal_W;
+T=[0:450];
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+Phi_tetragonal=a1111*Pz.^8 + a111.*Pz.^6 + a11.*Pz.^4 + a1.*Pz.^2;
+plot3(T,[theta.*0],Phi_tetragonal)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+{??? Error using ==> plot3
+Vectors must be the same lengths.
+} 
+plot3(T,[T.*0],Phi_tetragonal)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+plot3(T,[T.*0+sym(pi/4)],Phi_orthorhombic)
+{Warning: Imaginary parts of complex X, Y, and/or Z arguments ignored} 
+Phi_monoclinic
+ 
+Phi_monoclinic =
+ 
+a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12
+ 
+Py=P_mono.*sin(theta);
+Pz=P_mono.*cos(theta);
+Phi_monoclinic=a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12
+ 
+Phi_monoclinic =
+ 
+{??? Operation terminated by user during ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\disp.m',30,0)">sym.disp at 30</a>
+
+In ==> <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\@sym\display.m',17,0)">sym.display at 17</a>
+   disp(X)
+} 
+syms a1 a11 a111 a12 a112 a123 a1111 a1123 a1112 a1122 T;
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+Phi_monoclinic=a1*(Py^2 + Pz^2) + a11*(Py^4 + Pz^4) + a111*(Py^6 + Pz^6) + a1111*(Py^8 + Pz^8) + a112*(Py^4*Pz^2 + Py^2*Pz^4) + a1112*(Py^6*Pz^2 + Py^2*Pz^6) + Py^4*Pz^4*a1122 + Py^2*Pz^2*a12
+ 
+Phi_monoclinic =
+ 
+(32000000*T - 13900000000)*((cos(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3) - ((cos(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + (sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))*(361000*T - 141151000) + (4000000*T - 1830000000)*((cos(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2 + (sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2) + (48400000000*cos(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (48400000000*sin(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (2200000000*cos(theta)^2*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (2200000000*cos(theta)^4*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (253000000000*cos(theta)^2*sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (280000000000*cos(theta)^4*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (253000000000*cos(theta)^6*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (cos(theta)^2*sin(theta)^2*(6700000*T - 2240000000)*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2
+ 
+%Solving for the intersection for a possible T-Mc Phase Transition temperature
+
+theta=0;
+Phi_monoclinic_T_Mc=(32000000*T - 13900000000)*((cos(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3) - ((cos(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + (sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000))/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000))*(361000*T - 141151000) + (4000000*T - 1830000000)*((cos(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2 + (sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2) + (48400000000*cos(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (48400000000*sin(theta)^8*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (2200000000*cos(theta)^2*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (2200000000*cos(theta)^4*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^3)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^3 + (253000000000*cos(theta)^2*sin(theta)^6*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (280000000000*cos(theta)^4*sin(theta)^4*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (253000000000*cos(theta)^6*sin(theta)^2*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^4)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^4 + (cos(theta)^2*sin(theta)^2*(6700000*T - 2240000000)*(48000000*T + 100*10^(1/2)*(3669280000000000*cos(theta)^2 - 21072000000000*T - 3669280000000000*cos(theta)^4 + 13*T*(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000) + 23040000000*T^2 + 3974545000000000)^(1/2) - 21950000000)^2)/(258400000000*cos(theta)^4 - 258400000000*cos(theta)^2 + 59400000000)^2
+ 
+Phi_monoclinic_T_Mc =
+ 
+((32000000*T - 13900000000)*(48000000*T + 100*10^(1/2)*(23040000000*T^2 - 20299800000000*T + 3974545000000000)^(1/2) - 21950000000)^3)/209584584000000009493978902691840 + ((4000000*T - 1830000000)*(48000000*T + 100*10^(1/2)*(23040000000*T^2 - 20299800000000*T + 3974545000000000)^(1/2) - 21950000000)^2)/3528359999999999737856 + (47265625*(48000000*T + 100*10^(1/2)*(23040000000*T^2 - 20299800000000*T + 3974545000000000)^(1/2) - 21950000000)^4)/12157543251562499295425707203828903837696 - (361000*T - 141151000)*((2*T)/2475 + (10^(1/2)*(23040000000*T^2 - 20299800000000*T + 3974545000000000)^(1/2))/594000000 - 439/1188)
+ 
+Phi_tetragonal=a1111*Pz.^8 + a111.*Pz.^6 + a11.*Pz.^4 + a1.*Pz.^2;
+solve(Phi_monoclinic_T_Mc-Phi_tetragonal, T)
+{Warning: Explicit solution could not be found.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\solve.m',81,1)">solve at 81</a>
+ 
+ans =
+ 
+[ empty sym ]
+ 
+solve(-Phi_monoclinic_T_Mc+Phi_tetragonal, T)
+{Warning: Explicit solution could not be found.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\symbolic\symbolic\solve.m',81,1)">solve at 81</a>
+ 
+ans =
+ 
+[ empty sym ]
+ 
+pi/4
+
+ans =
+
+    0.7854
+
+{Warning: incomplete command in TeX text string:
+'M_'} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\plottools\setupplotbrowser.m',469,1)">setupplotbrowser>titlePropertySetCallback at 469</a>
+{Warning: incomplete command in TeX text string:
+'M_C _'} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\plottools\setupplotbrowser.m',469,1)">setupplotbrowser>titlePropertySetCallback at 469</a>
+{Warning: incomplete command in TeX text string:
+'Free Energy Expressions (T,O, M_'} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\plottools\setupplotbrowser.m',469,1)">setupplotbrowser>titlePropertySetCallback at 469</a>
+D=(2*a11-a12); A=3*a111-a112; B=4*a1111-a1112; C=4*a1111+2*a1112-2*a1122;
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+syms T;
+a1=3.61E5*(T-391); a11=-1.83E9+4E6*T; a12=-2.24E9+6.7E6*T; a111=1.39E10-3.2E7*T; a112=-2.2E9; a123=5.51E10; a1111=4.84E10; a1112=2.53E11; a1122=2.80E11; a1123=9.35E10;
+D=(2*a11-a12); A=3*a111-a112; B=4*a1111-a1112; C=4*a1111+2*a1112-2*a1122;
+2*B
+
+ans =
+
+ -1.1880e+011
+
+2*C
+
+ans =
+
+  2.7920e+011
+
+A
+ 
+A =
+ 
+43900000000 - 96000000*T
+ 
+D
+ 
+D =
+ 
+1300000*T - 1420000000
+ 
+solve(D, T)
+ 
+ans =
+ 
+14200/13
+ 
+simplify(ans)
+ 
+ans =
+ 
+14200/13
+ 
+vpa(ans)
+ 
+ans =
+ 
+1092.3076923076923076923076923077
+ 
+vpa(solve(A, T))
+ 
+ans =
+ 
+457.29166666666666666666666666667
+ 
+2*B*(cos(theta)^4+sin(theta)^4+2*C*cos(theta)^2*sin(theta)^2
+??? 2*B*(cos(theta)^4+sin(theta)^4+2*C*cos(theta)^2*sin(theta)^2
+                                                                |
+{Error: Expression or statement is incorrect--possibly unbalanced (, {, or [.
+} 
+2*B*(cos(theta)^4+sin(theta)^4)+2*C*cos(theta)^2*sin(theta)^2
+
+ans =
+
+ -1.1880e+011
+
+theta
+
+theta =
+
+     0
+
+syms theta;
+2*B*(cos(theta)^4+sin(theta)^4)+2*C*cos(theta)^2*sin(theta)^2
+ 
+ans =
+ 
+- 118800000000*cos(theta)^4 + 279200000000*cos(theta)^2*sin(theta)^2 - 118800000000*sin(theta)^4
+ 
+solve(ans, theta)
+ 
+ans =
+ 
+ -(log(- 271/323 - (6*6^(1/2)*143^(1/2)*i)/323)*i)/4
+ -(log(- 271/323 + (6*6^(1/2)*143^(1/2)*i)/323)*i)/4
+ 
+vpa(ans)
+ 
+ans =
+ 
+ -0.64156405375281408208239289843896
+  0.64156405375281408208239289843896
+ 
+solve([2*B*(cos(theta)^4+sin(theta)^4)+2*C*cos(theta)^2*sin(theta)^2]*R^2+A*R+D, R)
+ 
+ans =
+ 
+  ((576*T^2 + 38610*T*cos(theta)^4 - 90740*T*cos(theta)^2*sin(theta)^2 + 38610*T*sin(theta)^4 - 526800*T - 42174000*cos(theta)^4 + 99116000*cos(theta)^2*sin(theta)^2 - 42174000*sin(theta)^4 + 120450625)^(1/2) - 24*T + 10975)/(59400*cos(theta)^4 - 139600*cos(theta)^2*sin(theta)^2 + 59400*sin(theta)^4)
+ -(24*T + (576*T^2 + 38610*T*cos(theta)^4 - 90740*T*cos(theta)^2*sin(theta)^2 + 38610*T*sin(theta)^4 - 526800*T - 42174000*cos(theta)^4 + 99116000*cos(theta)^2*sin(theta)^2 - 42174000*sin(theta)^4 + 120450625)^(1/2) - 10975)/(59400*cos(theta)^4 - 139600*cos(theta)^2*sin(theta)^2 + 59400*sin(theta)^4)
+ 
+simplify(ans(1))
+ 
+ans =
+ 
+((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))
+ 
+clear R3 R4 R5;
+R3=ans;
+R4=-(24*T + (576*T^2 + 38610*T*cos(theta)^4 - 90740*T*cos(theta)^2*sin(theta)^2 + 38610*T*sin(theta)^4 - 526800*T - 42174000*cos(theta)^4 + 99116000*cos(theta)^2*sin(theta)^2 - 42174000*sin(theta)^4 + 120450625)^(1/2) - 10975)/(59400*cos(theta)^4 - 139600*cos(theta)^2*sin(theta)^2 + 59400*sin(theta)^4);
+R3= @(T, theta) ((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271));
+R4= @(T, theta) -(24*T + (576*T^2 + 38610*T*cos(theta)^4 - 90740*T*cos(theta)^2*sin(theta)^2 + 38610*T*sin(theta)^4 - 526800*T - 42174000*cos(theta)^4 + 99116000*cos(theta)^2*sin(theta)^2 - 42174000*sin(theta)^4 + 120450625)^(1/2) - 10975)/(59400*cos(theta)^4 - 139600*cos(theta)^2*sin(theta)^2 + 59400*sin(theta)^4);
+ezmesh(R3, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(R4, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+R3= @(T, theta) [((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2);
+R4= @(T, theta) [-(24*T + (576*T^2 + 38610*T*cos(theta)^4 - 90740*T*cos(theta)^2*sin(theta)^2 + 38610*T*sin(theta)^4 - 526800*T - 42174000*cos(theta)^4 + 99116000*cos(theta)^2*sin(theta)^2 - 42174000*sin(theta)^4 + 120450625)^(1/2) - 10975)/(59400*cos(theta)^4 - 139600*cos(theta)^2*sin(theta)^2 + 59400*sin(theta)^4)].^(1/2);
+ezmesh(R4, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(R3, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(imag(R3), [0,450 , 0, pi/4])
+{??? Undefined function or method 'imag' for input arguments of type 'function_handle'.
+} 
+R5= @(T, theta) imag([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2));
+ezmesh(R5, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+ezmesh(R5+R3, [0,450 , 0, pi/4])
+{??? Undefined function or method 'plus' for input arguments of type 'function_handle'.
+} 
+R6=R5+R3;
+{??? Undefined function or method 'plus' for input arguments of type 'function_handle'.
+} 
+R6=imag([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2))+real(R3= @(T, theta) [((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2);
+??? R6=imag([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2))+real(R3= @(T, theta) [((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2);
+                                                                                                                                                                   |
+{Error: The expression to the left of the equals sign is not a valid target for an assignment.
+} 
+R6=imag([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2))+real([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2));
+R6= @(T, theta) imag([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2))+real([((576*T^2 - 22933000*cos(4*theta) - 509185*T + 20995*T*cos(4*theta) + 101209625)^(1/2) - 24*T + 10975)/(100*(323*cos(4*theta) + 271))].^(1/2));
+ezmesh(R6, [0,450 , 0, pi/4])
+{Warning: Function failed to evaluate on array inputs; vectorizing the function may
+speed up its evaluation and avoid the need to loop over array elements.} 
+> In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\private\ezplotfeval.m',57,1)">specgraph\private\ezplotfeval at 57</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',611,1)">ezgraph3>ezeval at 611</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',538,1)">ezgraph3>surfplot at 538</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezgraph3.m',49,1)">ezgraph3 at 49</a>
+  In <a href="matlab: opentoline('C:\Program Files\MATLAB\R2010b\toolbox\matlab\specgraph\ezmesh.m',66,1)">ezmesh at 66</a>
+
+
+
+
+% A lot of work is still needed to decouple the monoclinic phase and get a simple temperature dependence
+diary off
