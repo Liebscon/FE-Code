@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+
+\usepackage{color}
+\usepackage{amsmath}
+% \usepackage{wasysym}
+\usepackage{graphicx}
+
+%New Command
+\newcommand{\td}{\text{d}}
+
+\title{Starting LaTeX}
+\author{Tyler Liebsch}
+
+\begin{document}
+\linespread{1.4}
+\oddsidemargin=15pt
+\maketitle
+
+\section{Learning Math}
+
+\begin{itemize}
+\item \$\$
+  $$
+     5+3=8
+  $$
+
+\item equations
+  \begin{equation}
+    a+b=c
+    \label{eq1}
+  \end{equation}
+  \begin{equation}
+  2+2=4
+  \end{equation}
+Lets reference our first algebraic equation denoted by \eqref{eq1}
+
+\item align*
+    \begin{align*}
+    a+b & =c \\
+    g*f-24+5 & = 37
+    \end{align*}
+\item{align}
+   \begin{align}
+   \nonumber
+   a+b & = c \\
+   \nonumber
+   b & = c-a \\
+  \label{eq2}
+   \frac{1}{b}*{b} & = \frac{c-a}{b}
+   \end{align}
+It follows from \eqref{eq2} that \eqref{eq1} is true.
+\end{itemize}
+
+\newpage
+
+\section{The Heat Exchange Equation.}
+This derivation is by Bernd Schr\*oder of Louisiana State.
+
+\begin{align}
+% Ampersands alternate between alignment characters and spacers!
+    -\iint_S\nabla \cdot \nabla u \cdot \text{d}\vec{S}
+    & = -k \frac{\partial}{\partial t} \iiint_B u \, \text{d}v \\
+    \iint_S \nabla u \cdot \td \vec{S}
+    & = \iiint_B k \frac{\partial u}{\partial t} \, \td V \\
+    \iiint_B \nabla \cdot \nabla u \, \td V & = \iiint_B k \frac{\partial u}{\partial t} \td V \\
+    \lim_{a \rightarrow 0}\frac{1}{ \frac{4}{3} \pi a^3} \iiint_B \nabla \cdot \nabla u \, \td V  
+    &= \lim_{a \rightarrow 0}\frac{1}{ \frac{4}{3} \pi a^3} \iiint_B k \frac{\partial u}{\partial t} \td V \\
+    \nabla \cdot \nabla u( \vec{r},t) &= k \frac{\partial u}{\partial t}(\vec{r}, t)
+\end{align}
+% Usable Commands are pmatrix, bmatrix, matrix
+% pmatrix has brackets around the matrix, the normal matrix command has no brackets.
+\section{Matrices}
+$$ \begin{pmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i 
+\end{pmatrix} $$
+
+\section{Table \& Figure Example}
+
+In Table \ref{tab:classlist}, you will find the list of class participatns.
+
+\begin{table}[htb]
+% The Label command for the table has to come after the caption.
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Name & Department & Email \\ 
+\hline \hline
+Luke Corwin & Physics & luke.corwin@sdsmt.edu\\
+Michelle While & Physics & $ \int e^x \, \text{d}x =x$ \\
+Deb Bienert & MCS & $1.53 \pm 0.3 $\\
+Tyler Liebsch & Physics & tyler.liebsch@mines.sdsmt.edu\\
+\hline
+\end{tabular}
+\caption{List of people in this class}
+\label{tab:classlist}
+\end{center}
+\end{table}
+
+\newpage
+% Tilda will create a space without ever breaking a line.
+In Figure ~\ref{fig:lattice}, the difference in the crystalline structure can be seen.
+
+\begin{figure}
+\caption{Crystal Lattice Structures}
+\includegraphics[width=0.5\textwidth]{C:/Users/Tyler/Desktop/Crystal-Lattices}
+\label{fig:lattice}
+\reflectbox{\includegraphics[width=0.5\textwidth]{C:/Users/Tyler/Desktop/Crystal-Lattices}}
+\end{figure}
+
+
+\end{document}

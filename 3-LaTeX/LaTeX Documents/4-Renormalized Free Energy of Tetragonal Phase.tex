@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{color}
+\usepackage{amsmath}
+%\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tipa}
+
+
+\begin{document}
+\linespread{1.1}
+
+%\section{Free Energy Analysis}
+
+%The phase transistions of a bulk crystal of BaTiO$_3$ can be analyzed by studying the free energy and its successive derivatives.  The equilibrium conditions can be determined by setting the first derivative equal to zero for each order parameter. The Free Energy can be broken down into various subsections:
+
+%\begin{align}
+ %F_{Polar} & =a_1 \sum _i P_i^2+a_{11} \sum _i P_i^4 + a_{12} \sum _{i<j} P_i^2 P_j^2 \\
+ %F_{Elastic} &= \frac{1}{2} c_{11} \sum _{i} u_{ii} + c_{12} \sum _{i<j} u_{\text{ii}} u_{j j}++\frac{1}{2} c_{44} \sum _{i j} u_{\text{ij}} \\
+ %F_{Electrostriction}& = -q_{11} \sum _i P_i^2 u_{\text{ii}}-q_{12} \sum _{i\neq j\neq k} u_{\text{ii}} \left(P_j^2+P_k^2\right)-q_{44} \sum _{i<j} P_i u_{\text{ij}} P_j \\
+ %F_{Gradient} &=\frac{1}{2} g_{11} \sum _i P_{i,i}^2+g_{12} \sum _{i<j} P_{i,i} P_{j,j}+\frac{1}{2} g_{44} \sum _{i<j} \left(P_{i,j}+P_{j,i}\right){}^2
+%\end{align}
+
+\section{Formulation of Problem}
+\begin{align}
+\frac{\partial \Phi}{\partial u_{ij}}=0 \to u_{ij}[P]\to \frac{\partial \Phi}{\partial P_i}=0 \to P_i[T]
+\end{align}
+
+The Free Energy is given below using a sixth order expansion of the polarization order parameter. \\
+\begin{align}
+\begin{split}\Phi &=a_1 \left(P_1^2+P_2^2+P_3^2\right)+a_{11} \left(P_1^4+P_2^4+P_3^4\right)+a_{12} \left(P_1^2 P_2^2+P_3^2 P_2^2+P_1^2 P_3^2\right)+ \\ 
+&a_{111} \left(P_1^6+P_2^6+P_3^6\right)+a_{112} \left( P_1^4\left(P_2^2+P_3^2\right)+P_2^4\left(P_1^2+P_3^2\right)+P_3^4 \left(P_2^2+P_1^2\right)\right)+ \\ 
+& a_{123} P_1^2 P_2^2 P_3^2+ \\ 
+&\frac{1}{2} c_{11} \left(u_1^2+u_2^2+u_3^2\right)+ c_{12} \left(u_1 u_2+u_3 u_2+u_1 u_3\right)+\frac{1}{2} c_{44} \left(u_4^2+u_5^2+u_6^2\right)- \\ 
+& q_{11} \left(P_1^2 u_1+P_2^2 u_2+P_3^2 u_3\right)-q_{12} \left(P_1^2 \left(u_2+u_3\right)+P_3^2 \left(u_1+u_2\right)+P_2^2 \left(u_1+u_3\right)\right)- \\ & q_{44} \left(P_2 P_3 u_4+P_1 P_3 u_5+P_1 P_2 u_6\right) \end{split}
+\end{align}
+
+\section{Strain Relations}
+\label{sec:Strain}
+The first derivative of the free energy gives the strain equilbrium conditions.
+\begin{align}
+u_1 &= Q_{11} P_1^2 + Q_{12}(P_2^2 + P_3^2) \\
+u_2 &= Q_{11} P_2^2 + Q_{12}(P_1^2 + P_3^2) \\
+u_3 &= Q_{11} P_3^2 + Q_{12}(P_1^2 + P_2^2) \\
+u_4 &= Q_{44}P_2P_3, \quad u_5=  Q_{44}P_1P_3, \quad u_6=  Q_{44}P_1P_2
+\end{align}
+
+The quadratic coefficients are then renormalized as:
+\begin{align}
+a_{11} &=  a'_{11}-( \frac{q_{11} Q_{11}}{2}+q_{12}Q_{12}) \\
+a_{12} &= a'_{12}-(q_{12} Q_{11}+q_{11} Q_{12}+q_{12} Q_{12}+\frac{q_{44} Q_{44}}{2})
+\end{align}
+It is important to note that the coefficients given in papers are derived from experiments are analyzed using first principles to fit experimental observations.  As such the parameters are already normalized to include the contribution from strain.
+\newpage
+\subsection{Tetragonal Phase}
+The free energy can be expressed as a polar component with some perturbation arising from the strain field.
+\begin{align}
+\Phi_{Total}=\Phi_{Polar}-\delta\Phi \text{\textvertline}_{P=P_0}
+\end{align}
+
+Where $P_0$ is the normalized polarization solution within the strain field.
+The resulting free energy comparison is given in Figure 1. \\
+\vspace{12pt}
+\includegraphics[width=1.0\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/FreeEnergyT}
+
+The variation of the polarization in the tetragonal phase can be seen by comparing the solutions using $a_{11}$ and $a'_{11}$.  The ''w/o strain'' solution uses the $a'_{11}$ coefficient whereas the ''w/ strain'' solution uses the normalized,$a_{11}$, coefficient.  The phase transition starts to behave more as a second-order phase transition when the strain is not included, which is as expected since for temperatures close to $T_C \text{the coefficient} a'_{11}$ has a different sign than $a_{11}$. \\
+
+\includegraphics[width=1.0\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/TetragonalPolarizationwithStrain2}
+
+
+
+\end{document}

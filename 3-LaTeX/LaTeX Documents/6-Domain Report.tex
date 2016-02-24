@@ -1,0 +1,178 @@
+\documentclass{article}
+
+\usepackage{color}
+\usepackage[fleqn]{amsmath}
+%\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tipa}
+\usepackage{gensymb}
+\usepackage{ragged2e}
+\usepackage{grffile}
+\usepackage[margin=1.25in]{geometry}
+%\usepackage{parskip}
+%\setlength{\parindent}{15pt}
+
+\begin{document}
+\linespread{1.0}
+\justify
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Introduction}
+\justify
+
+\indent           The appearance of polarization about the phase transition gives rise to two orientations of the polarization vector.  Domains existing within the crystalline structure can be considered from a phenomenological standpoint from the change in sign of the spontaneous polarization vector.  Domains can be observed experimentally as regions of uniformly orientated polarization vector.  Domain walls are formed at the interface between these regions.  Alternating domain regions lower the free energy of the bulk crystal; however, the domain walls increase the free energy.
+
+The Gibbs free energy including the spatial gradients of the order parameter are given below.  The strain and electrostriction contributions to the free energy are not included since these expressions can be accounted for by renormalizing the coefficients of the order parameter as seen in previous sections.
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Phenomenological Theory-GLD Approach}
+
+%\begin{split}\Phi &=a_1 \left(P_1^2+P_2^2+P_3^2\right)+a_{11} \left(P_1^4+P_2^4+P_3^4\right)+a_{12} \left(P_1^2 P_2^2+P_3^2 P_2^2+P_1^2 P_3^2\right)+ \\ 
+%&a_{111} \left(P_1^6+P_2^6+P_3^6\right)+a_{112} \left( P_1^4\left(P_2^2+P_3^2\right)+P_2^4\left(P_1^2+P_3^2\right)+P_3^4 %\left(P_2^2+P_1^2\right)\right)+ \\ 
+%& a_{123} P_1^2 P_2^2 P_3^2+ \\ 
+%&\frac{1}{2} c_{11} \left(u_1^2+u_2^2+u_3^2\right)+ c_{12} \left(u_1 u_2+u_3 u_2+u_1 u_3\right)+\frac{1}{2} c_{44} \left(u_4^2+u_5^2+u_6^2\right)- \\ 
+%& q_{11} \left(P_1^2 u_1+P_2^2 u_2+P_3^2 u_3\right)-q_{12} \left(P_1^2 \left(u_2+u_3\right)+P_3^2 \left(u_1+u_2\right)+P_2^2 \left(u_1+u_3\right)\right)- \\ & %q_{44} \left(P_2 P_3 u_4+P_1 P_3 u_5+P_1 P_2 u_6\right) \end{split} \\
+
+The components of the Gibbs free energy up to the sixth order are shown below without Voigt notation:
+\begin{align*}
+\Phi_{P} &= a_1 \left(P_1^2+P_2^2+P_3^2\right)+a_{11} \left(P_1^4+P_2^4+P_3^4\right)+a_{12} \left(P_1^2 P_2^2+P_3^2 P_2^2+P_1^2 P_3^2\right) \\ 
+& \qquad + a_{111} \left(P_1^6+P_2^6+P_3^6\right)+a_{112} \left( P_1^4\left(P_2^2+P_3^2\right)+P_2^4\left(P_1^2+P_3^2\right)+P_3^4 \left(P_2^2+P_1^2\right)\right) \nonumber \\ \nonumber & \qquad + a_{123} P_1^2 P_2^2 P_3^2 \\
+\Phi_{E}&=\frac{1}{2} c_{11} \left(u_{11}^2+u_{22}^2+u_{33}^2\right)+ c_{12} \left(u_{11} u_{22}+u_{33} u_{22}+u_{11} u_{33}\right)+\frac{1}{2} c_{44} \left(u_{23}^2+u_{13}^2+u_{12}^2\right) \\
+\Phi_{Q} &= -q_{11} \left(P_1^2 u_{11}+P_2^2 u_{22}+P_3^2 u_{33}\right)-q_{12} \left(P_1^2 \left(u_{22}+u_{33}\right)+P_3^2 \left(u_{11}+u_{22}\right)+P_2^2 \left(u_{11}+u_{33}\right)\right) \\
+ & \qquad -q_{44} \left(P_2 P_3 u_{23}+P_1 P_3 u_{13}+P_1 P_2 u_{12}\right) \nonumber \\
+ \Phi_{G} &= \frac{\delta_{11}}{2}(P_{1,1}^2+P_{2,2}^2+P_{3,3}^2)+\delta_{12}(P_{1,1} P_{2,2}+P_{1,1} P_{3,3}+ P_{2,2} P_{3,3}) \\
+ &  +\frac{\delta_{44}}{2}[(P_{1,2}+P_{2,1})^2+(P_{1,3}+P_{3,1})^2+(P_{2,3}+P_{3,2})^2] \\
+\end{align*}
+
+Our phenomenological model studies a single domain barium titanate crystal in the absence of an electric field and any applied stress.There exist several solutions to the minimzation of the free energy for ferroelectric perovskites.  Here we discuss the tetragonal to orthorhombic phase transition.  The free energy must be expanded up to the sixth order in order for the physics of a first-order phase transition to be observed.  
+
+To illustrate the procedure of analyzing the phase transition, we initially consider the first-order phase transition(PT) from the non-polar cubic phase to the tetragonal phase at the Curie point.  At the Curie point, the crystal lattice transforms into the tetragonal phase, which is accompanied by an additional strain along the primary axis.  There exist six different crystallographic orientations which the tetragonal structure can be aligned.  Here we consider the c-axis (001) as is customarily analyzed. [1]
+
+\label{sec:Formulation}
+\begin{align}
+\frac{\partial \Phi}{\partial u_{ij}}=0 \to u_{ij}[P]
+\end{align}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Strain Relations}
+\label{sec:Strain}
+The first derivative of the free energy gives the strain equilbrium conditions.
+\begin{align}
+u_{11} &= Q_{11} P_1^2 + Q_{12}(P_2^2 + P_3^2) \qquad u_{23} = Q_{44}P_2P_3 \\
+u_{22} &= Q_{11} P_2^2 + Q_{12}(P_1^2 + P_3^2) \qquad u_{13} =  Q_{44}P_1P_3 \\
+u_{33} &= Q_{11} P_3^2 + Q_{12}(P_1^2 + P_2^2) \qquad u_{12} =  Q_{44}P_1P_2
+\end{align}
+
+The quadratic coefficients are then renormalized as:
+\begin{align}
+a'_{11} &=  a_{11}-( \frac{q_{11} Q_{11}}{2}+q_{12}Q_{12}) \\
+a'_{12} &= a_{12}-(q_{12} Q_{11}+q_{11} Q_{12}+q_{12} Q_{12}+\frac{q_{44} Q_{44}}{2})
+\end{align}
+It is important to note that the coefficients given in papers are either derived from experiments or analyzed using first principles to fit experimental observations.  As such the parameters are already normalized to include this thermodynamic contribution from strain. \\
+The free energy can be simplified using the renormalized coefficients.  Using the equilbrium solution and including the gradient expression the polarization through the domain boundary can be derived.  The elastic and electrostatic equilbrium conditions for the strain field leads to the domain walls forming either a 90$\degree $ or 180$\degree$ boundary. [2]   This angle compares the polarization vector on either side of the domain wall.
+% NEEDS REFERENCE FOR FREE ENERGY DEMONINATOR
+\begin{align*}
+\Phi_{P} &= \frac{a_1}{2} \left(P_1^2+P_2^2+P_3^2\right)+a_{11} \left(P_1^4+P_2^4+P_3^4\right)+\frac{a_{12}}{2} \left(P_1^2 P_2^2+P_3^2 P_2^2+P_1^2 P_3^2\right) \\ 
+& \qquad + \frac{a_{111}}{6} \left(P_1^6+P_2^6+P_3^6\right)+a_{112} \left( P_1^4\left(P_2^2+P_3^2\right)+P_2^4\left(P_1^2+P_3^2\right)+P_3^4 \left(P_2^2+P_1^2\right)\right) \nonumber \\ \nonumber & \qquad + a_{123} P_1^2 P_2^2 P_3^2 \\
+ \Phi_{G} &= \frac{\delta_{11}}{2}(P_{1,1}^2+P_{2,2}^2+P_{3,3}^2)+\delta_{12}(P_{1,1} P_{2,2}+P_{1,1} P_{3,3}+ P_{2,2} P_{3,3}) \\
+ & \qquad +\frac{\delta_{44}}{2}[(P_{1,2}+P_{2,1})^2+(P_{1,3}+P_{3,1})^2+(P_{2,3}+P_{3,2})^2]
+\end{align*}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Simple Tetragonal Calculation (180$\degree$ D.W.)}
+
+Considering a tetragonal phase with the dipole moment aligned along the c-axis [001].  The free energy simplifies to the following expression:
+\begin{align}
+\Phi &= \frac{a_1}{2} P_3^2+ \frac{a_{11}}{4} P_3^4 + \frac{a_{111}}{6} P_3^6+\frac{\delta_{44}}{2} (P_{3,1})^2
+\label{Tetragonal-FreeEnergy}
+\end{align}
+Equation (\ref{Tetragonal-FreeEnergy}) must satisfy the Euler equation$^{[2]}$, applying equation (\ref{Tetragonal-FreeEnergy}) to the Euler equation (\ref{Euler-Equation}) gives the well known non-linear second order PDE (\ref{Tetragonal-PDE}).  Using the same method as Hlinka, Marton and Sidorkin$^{[3-6]}$, this differential shows a kink solution with a tanh profile.
+\begin{align}
+\frac{\partial}{\partial x}(\frac{\partial P}{\partial ( \partial P/ \partial x)})-\frac{\partial P}{\partial x}=0
+\label{Euler-Equation}
+\end{align}
+\begin{align}
+\frac{-\delta_{44}}{2} \frac{\partial^2 P_3}{\partial x^2} &= a_1 P_3 + a_{11} P_3^3 + a_{111} P_3^5
+\label{Tetragonal-PDE}
+\end{align}
+
+Far from the domain wall, the polarization approaches a constant value; therefore, $ \partial^2 P / \partial x^2 = 0$.  The boundary conditions for the polarization  are given by the equilibrium solutions from the previous section.
+\begin{align*}
+& P(-\infty) = -P_o \\
+& P(\infty) = P_o
+\end{align*}
+
+Multiplying Equation (\ref{Tetragonal-PDE}) by $\frac{dP}{dx}$ and integrating with respect to \emph{dx} gives
+\begin{align}
+\frac{\delta_{44}}{2}(\frac{dP}{dx})^2=\Phi[P[x]]-\Phi[P_o]
+\end{align}
+
+The solution to this differential equation is well known $ ^{[1-6]}$ to be a tanh solution.  Higher order terms in the free energy add additional corrections to the same tanh solution.$^{[4-6]}$
+
+The free energy expression up to the fourth order gives the polarization solution given by equation (\ref{Tetragonal-4thOrderSolution}).  If the free energy expression up to the sixth order expansion is needed, the resulting solution is equation (\ref{Tetragonal-6thOrderSolution}).  If equation (\ref{Tetragonal-6thOrderSolution}) is evaluated for $a_{111}= 0$, which corresponds to the fourth order expression of the Gibbs free energy, equation (\ref{Tetragonal-6thOrderSolution}) equals equation (\ref{Tetragonal-4thOrderSolution}) as expected.
+
+\begin{align}
+P(x) &= P_o \tanh{(\frac{x}{\delta})} \qquad \text{where} \quad \delta=\sqrt{\frac{2 \delta_{44}}{a_1}}
+\label{Tetragonal-4thOrderSolution}
+\end{align}
+
+\begin{align}
+P(x) &= P_o \frac{\sinh{(x/\delta)}}{\sqrt{\cosh^2{(x/\delta)} + A} } \qquad \text{where} \quad A=\frac{2 a_{111} P_o^2}{4 a_{111} P_o^2 + 3 a_{11}}
+\label{Tetragonal-6thOrderSolution}
+\end{align}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{90$\degree$ Domain Wall}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Twinning}
+
+The phase transformation of barium titanate is accompanied by a deformation of the unit cell; this process is both elastic and reversible.  A twinned crystal has two constituent domains which meet at the twin boundary.  These twin components share a twinning operation (symmetry) which cannot be a symmetry operation of the crystal lattice.$^{ [1]}$  When an external force is applied, the energy of different twins may be favored resulting in a twin from an originally homogeneous crystal.  This phenomenon is called mechanical twinning and has been of recent interest in ferroelectric phase transitions.  The strain induced by the deformation of the unit cell, during a phase transition, can create twin structures in the daughter phase from a single, homogeneous crystal.
+
+In BaTiO$_3$, the spontaneous polarization is determined by the displacement of the central titantium ion relative to the oxygen octahedron.  In the tetragonal phase the Ti ion shifts along the polar axis resulting in two orientations along each crystallographic axis.
+
+Each twin domain has a lattice structure mirroring the other twin component.$^{ [7]}$
+
+\section{Additional Approaches}
+\subsection{Martensitic Phase Transformations}
+\subsection{Structural Phase Transitions}
+\subsection{Statistical Theory-Hamiltonian}
+\section{Heterogeneous Ferroelectrics}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%Bibliography
+%\begin{thebibliography}{9}
+%\bibitem{cross10}
+%	Tagantsev and Cross and Fousek,
+%	\emph{Domains in Ferroic Crystals & Films},
+%	Springer,
+%	2010.
+
+%\bibitem{levanyuk98}
+%	Boris Strukov and Arkadi Levanyuk,
+%	\emph{Ferroelectric Phenomenon in Crystals},
+%	Springer,
+%	1998.
+	
+% [3] Sidorkin
+% [4,5,6] Hlinka and Marton
+% [7] Klassen, Neklyudova
+%\end{thebibliography}
+
+
+\end{document}

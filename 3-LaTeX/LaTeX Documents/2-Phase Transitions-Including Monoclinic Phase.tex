@@ -1,0 +1,160 @@
+\documentclass{article}
+
+\usepackage{color}
+\usepackage{amsmath}
+%\usepackage{mathtools}
+\usepackage{graphicx}
+
+\title{Phase Transitions of Barium Titanate}
+\author{Tyler Liebsch}
+
+\begin{document}
+\linespread{1.1}
+\maketitle
+
+%\section{Free Energy Analysis}
+
+%The phase transistions of a bulk crystal of BaTiO$_3$ can be analyzed by studying the free energy and its successive derivatives.  The equilibrium conditions can be determined by setting the first derivative equal to zero for each order parameter. The Free Energy can be broken down into various subsections:
+
+%\begin{align}
+ %F_{Polar} & =a_1 \sum _i P_i^2+a_{11} \sum _i P_i^4 + a_{12} \sum _{i<j} P_i^2 P_j^2 \\
+ %F_{Elastic} &= \frac{1}{2} c_{11} \sum _{i} u_{ii} + c_{12} \sum _{i<j} u_{\text{ii}} u_{j j}++\frac{1}{2} c_{44} \sum _{i j} u_{\text{ij}} \\
+ %F_{Electrostriction}& = -q_{11} \sum _i P_i^2 u_{\text{ii}}-q_{12} \sum _{i\neq j\neq k} u_{\text{ii}} \left(P_j^2+P_k^2\right)-q_{44} \sum _{i<j} P_i u_{\text{ij}} P_j \\
+ %F_{Gradient} &=\frac{1}{2} g_{11} \sum _i P_{i,i}^2+g_{12} \sum _{i<j} P_{i,i} P_{j,j}+\frac{1}{2} g_{44} \sum _{i<j} \left(P_{i,j}+P_{j,i}\right){}^2
+%\end{align}
+
+\section{Formulation of Problem}
+\begin{align}
+\frac{\partial \Phi}{\partial u_{ij}}=0 \to u_{ij}[P]\to \frac{\partial \Phi}{\partial P_i}=0 \to P_i[T]
+\end{align}
+
+
+\section{Strain Relations}
+\label{sec:Strain}
+The first derivative of the free energy gives the strain equilbrium conditions.
+
+\subsection{Tetragonal Phase}
+\begin{align}
+u_1 &= - P_3^2 \frac{c_{12} q_{11}-2 c_{11} q_{12}}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_2 &= - P_3^2 \frac{c_{12}q_{11}-2 c_{11}  q_{12}}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_3 &= -  P_3^2 \frac{-c_{11} q_{11}-c_{12}  q_{11}+4 c_{12} q_{12}}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_4 &= 0, \quad u_5= 0, \quad u_6= 0
+\end{align}
+
+\subsection{Orthorhombic Phase}
+\begin{align}
+u_1 &= - P_o^2 \frac{-\frac{1}{2} c_{11} q_{11} -c_{11} q_{12}+2 c_{12} q_{12} }{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_2 &= - P_o^2 \frac{c_{12} q_{11} -2 c_{11} q_{12}}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_3 &= - P_o^2 \frac{-\frac{1}{2} c_{11} q_{11} -c_{11} q_{12} +2 c_{12} q_{12} }{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_4 &= 0, \quad u_5 = \frac{q_{44} P_o^2}{2 c_{44}}, \quad u_6= 0 \\
+\end{align}
+Where $ \quad  P_1=P_3=\frac{P_o}{\sqrt{2}} $
+
+\subsection{Monoclinic Phase}
+\begin{align}
+u_1 &=-\frac{P_1^2(-c_{11} q_{11}-c_{12} q_{11}+4 c_{12}  q_{12})+P_3^2 (c_{12} q_{11}-2 c_{11}  q_{12})}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_2&= -\frac{P_1^2 (c_{12} q_{11}-2 c_{11}  q_{12})+P_3^2(c_{12}  q_{11}-2 c_{11} q_{12})}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_3 &= -\frac{P_1^2 (c_{12} q_{11}-2 c_{11} q_{12})- P_3^2(c_{11} q_{11}-c_{12} q_{11}+4 c_{12}  q_{12})}{\left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_4 &= 0, \quad u_5= \frac{P_1 P_3 q_{44}}{c_{44}}, \quad u_6= 0
+\end{align}
+
+
+\section{Renormalized Free Energy}
+Using the solutions for the strain from section 1 for each phase renormalizes the coefficients of the free energy
+\begin{align}
+\Phi=a_1 ( P_1^2+P_3^2 )+ a_{11}^\prime ( P_1^4 + P_3^4)+ a_{12} ^\prime P_1^2 P_3^2 \\ 
+          +a_{111} ( P_1^6+P_3^6)+ a_{112} P_1^2 P_3^2( P_1^2 +P_3^2) \nonumber
+\end{align}
+Where the renormalized coefficients $ a_{11}' \text{and } a_{12}' $ are determined by the strain relation found in the previous section.
+
+\subsection{Renormalized Parameters}
+\begin{align}
+a_{11}'&=-\frac{-2 a_{11} \left(c_{11}^2+c_{12} c_{11}-2 c_{12}^2\right)+c_{12} q_{11} \left(q_{11}-8 q_{12}\right)+c_{11} \left(q_{11}^2+8 q_{12}^2\right)}{2 \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+\nonumber \\
+a_{12}'&=\frac{\begin{aligned}
+                       & \qquad 2 a_{12} \left(c_{11}^2+c_{12} c_{11}-2 c_{12}^2\right) c_{44}+ 2 c_{12}^2 q_{44}^2 \\
+                       &-c_{11} \left(c_{11} q_{44}^2+8 c_{44} q_{12}                 \left(q_{11}+q_{12}\right)\right)
+                                 +c_{12} \left(2 c_{44} \left(q_{11}^2+8 q_{12}^2\right)-c_{11} q_{44}^2\right) \end{aligned}}
+      {2 \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right) c_{44}}
+\end{align}
+
+
+\newpage
+\section{Equilibrium Polarization}
+
+\subsection{Tetragonal Polarization}
+\begin{align}
+P_3= \sqrt{\frac{\sqrt{(a'_{11})^{2}-3 a_1 a_{111}}-a_{11}'}{3 a_{111}}}
+\end{align}
+\includegraphics[width=\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/TetragonalPolarizationwithStrain}
+
+\subsection{Orthorhombic Polarization}
+The Orthorhombic polarization vector is aligned in the (101) plane:
+\begin{align}
+P_1=P_3= \sqrt{\frac{\sqrt{(2 a'_{11}+a'_{12})^2-12 a_1 \left(a_{111}+a_{112}\right)}-2 a'_{11}-a'_{12}}{6(a_{111}+a_{112})}}
+\end{align}
+\includegraphics[width=\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/OrthorhombicPolarizationwithStrain}
+
+\subsection{Monoclinic (M$_C$) Polarization}
+The Monoclinic polarization vector is aligned in the same (101) plane as in the Orthorhombic phase but with unequal components
+\begin{align}
+P_1 &= \frac{\sqrt{\frac{\mp{B}+C}{\left(a_{112}-3 a_{111}\right)^2}}}{\sqrt{2}} \\
+P_3 &= \frac{\sqrt{\frac{\pm{B}+C}{3 a_{111}-a_{112}}}}{\sqrt{6 a_{111}-2 a_{112}}}
+\end{align}
+\begin{align}
+          B &= \sqrt{3 a_{111}-a_{112}} [3 a_{111} \left(8 a_1 a_{112}+4 (a'_{11})^2+4a'_{11} a'_{12}-3 (a'_{12})^2\right)- \\ 
+           & \quad a_{112} \left(4 a_1 a_{112}+20 (a'_{11})^2-12 a'_{11} a'_{12}+(a'_{12})^2\right)-36 a_1 a_{111}^2]^{1/2} \nonumber \\
+           \nonumber \\
+           C &= a_{111} (3 a'_{12}-6 a'_{11})+2 a_{112} a'_{11}-a_{112} a'_{12}
+\end{align}
+
+Equation  was determined using the phenomenological study of the elastic field detailed in section 2; however, since the monoclinic phase in barium titanate has been a recent observation the elastic constants are yet unknown.  Disregarding the elastic field a numerical approximation can analyzed graphically and is given in the figure shown.  Theta in the figure describes the angle of the polarization vector in the (101) plane.  The polarization solutions for the T and O phases are given for reference, with the solutions being independent of the strain field model, for comparison.
+
+\includegraphics[width=\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/McPolarizationConstantTheta}
+
+
+\newpage
+\section{Strain as a Function of Temperature}
+
+\subsection{Tetragonal Strain}
+For the Tetragonal Phase we have: \\*
+\begin{align}
+u_1 &= \frac{\left(\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}\right) \left(2 c_{11} q_{12}-c_{12} q_{11}\right)}{3 a_{111} \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)}, \\
+u_2 &= \frac{\left(\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}\right) \left(2 c_{11} q_{12}-c_{12} q_{11}\right)}{3 a_{111} \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)}, \\
+u_3 &= \frac{\left(\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}\right) \left(c_{11} q_{11}+c_{12} \left(q_{11}-4 q_{12}\right)\right)}{3 a_{111} \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)}, \\
+u_4 &= 0, \quad u_5= 0, \quad u_6=0 \\
+\nonumber
+\end{align}
+\includegraphics[width=\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/ElasticStrainT}  \\*
+
+\subsection{Orthorhombic Strain}
+\begin{align}
+u_1 &= \frac{\left(-2 a'_{11}-a'_{12}+\sqrt{\left(2 a'_{11}+a'_{12}\right){}^2-12 a_1 \left(a_{111}+a_{112}\right)}\right) \left(c_{11} \left(q_{11}+2 q_{12}\right)-4 c_{12} q_{12}\right)}{12 \left(a_{111}+a_{112}\right) \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_2 &= \frac{\left(-2 a'_{11}-a'_{12}+\sqrt{\left(2 a'_{11}+a'_{12}\right){}^2-12 a_1 \left(a_{111}+a_{112}\right)}\right) \left(2 c_{11} q_{12}-c_{12} q_{11}\right)}{6 \left(a_{111}+a_{112}\right) \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_3 &= \frac{\left(-2 a'_{11}-a'_{12}+\sqrt{\left(2 a'_{11}+a'_{12}\right){}^2-12 a_1 \left(a_{111}+a_{112}\right)}\right) \left(c_{11} \left(q_{11}+2 q_{12}\right)-4 c_{12} q_{12}\right)}{12 \left(a_{111}+a_{112}\right) \left(c_{11}-c_{12}\right) \left(c_{11}+2 c_{12}\right)} \\
+u_4&=0, \quad u_5 = \frac{q_{44} \left(-2 a'_{11}-a'_{12}+\sqrt{\left(2 a'_{11}+a'_{12}\right){}^2-12 a_1 \left(a_{111}+a_{112}\right)}\right)}{12 \left(a_{111}+a_{112}\right) c_{44}}, \quad u_6=0
+\end{align}
+
+\includegraphics[width=\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/ElasticStrainO}  \\*
+
+\subsection{Monoclinic Strain}
+\begin{align}
+\nonumber
+\end{align}
+
+\includegraphics[width=0.9\linewidth]{C:/Users/Tyler/Desktop/LaTeXFigures/ElasticStrainMc}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

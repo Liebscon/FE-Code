@@ -1,0 +1,91 @@
+\documentclass{article}
+
+\usepackage{color}
+\usepackage{amsmath}
+%\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tipa}
+
+
+\begin{document}
+\linespread{1.1}
+
+%\section{Free Energy Analysis}
+
+%The phase transistions of a bulk crystal of BaTiO$_3$ can be analyzed by studying the free energy and its successive derivatives.  The equilibrium conditions can be determined by setting the first derivative equal to zero for each order parameter. The Free Energy can be broken down into various subsections:
+
+%\begin{align}
+ %F_{Polar} & =a_1 \sum _i P_i^2+a_{11} \sum _i P_i^4 + a_{12} \sum _{i<j} P_i^2 P_j^2 \\
+ %F_{Elastic} &= \frac{1}{2} c_{11} \sum _{i} u_{ii} + c_{12} \sum _{i<j} u_{\text{ii}} u_{j j}++\frac{1}{2} c_{44} \sum _{i j} u_{\text{ij}} \\
+ %F_{Electrostriction}& = -q_{11} \sum _i P_i^2 u_{\text{ii}}-q_{12} \sum _{i\neq j\neq k} u_{\text{ii}} \left(P_j^2+P_k^2\right)-q_{44} \sum _{i<j} P_i u_{\text{ij}} P_j \\
+ %F_{Gradient} &=\frac{1}{2} g_{11} \sum _i P_{i,i}^2+g_{12} \sum _{i<j} P_{i,i} P_{j,j}+\frac{1}{2} g_{44} \sum _{i<j} \left(P_{i,j}+P_{j,i}\right){}^2
+%\end{align}
+
+\section{Formulation of Problem}
+\begin{align}
+\frac{\partial \Phi}{\partial u_{ij}}=0 \to u_{ij}[P]\to \frac{\partial \Phi}{\partial P_i}=0 \to P_i[T]
+\end{align}
+
+The Free Energy is given below using a sixth order expansion of the polarization order parameter. \\
+\begin{align}
+\begin{split}\Phi &=a_1 \left(P_1^2+P_2^2+P_3^2\right)+a_{11} \left(P_1^4+P_2^4+P_3^4\right)+a_{12} \left(P_1^2 P_2^2+P_3^2 P_2^2+P_1^2 P_3^2\right)+ \\ 
+&a_{111} \left(P_1^6+P_2^6+P_3^6\right)+a_{112} \left( P_1^4\left(P_2^2+P_3^2\right)+P_2^4\left(P_1^2+P_3^2\right)+P_3^4 \left(P_2^2+P_1^2\right)\right)+a_{123} P_1^2 P_2^2 P_3^2+ \\ 
+&\frac{1}{2} c_{11} \left(u_1^2+u_2^2+u_3^2\right)+ c_{12} \left(u_1 u_2+u_3 u_2+u_1 u_3\right)+\frac{1}{2} c_{44} \left(u_4^2+u_5^2+u_6^2\right)- \\ 
+& q_{11} \left(P_1^2 u_1+P_2^2 u_2+P_3^2 u_3\right)-q_{12} \left(P_1^2 \left(u_2+u_3\right)+P_3^2 \left(u_1+u_2\right)+P_2^2 \left(u_1+u_3\right)\right)- \\ & q_{44} \left(P_2 P_3 u_4+P_1 P_3 u_5+P_1 P_2 u_6\right) \end{split}
+\end{align}
+
+\section{Strain Relations}
+\label{sec:Strain}
+The first derivative of the free energy gives the strain equilbrium conditions.
+
+\subsection{Tetragonal Phase}
+\begin{align}
+u_1 &= Q_{11} P_1^2 + Q_{12}(P_2^2 + P_3^2) \\
+u_2 &= Q_{11} P_2^2 + Q_{12}(P_1^2 + P_3^2) \\
+u_3 &= Q_{11} P_3^2 + Q_{12}(P_1^2 + P_2^2) \\
+u_4 &= Q_{44}P_2P_3, \quad u_5=  Q_{44}P_1P_3, \quad u_6=  Q_{44}P_1P_2
+\end{align}
+
+Where $Q_{11}=0.1 , Q_{12}=-0.045 , Q_{44}=0.029$
+
+The renormalized coefficient is then
+\begin{align}
+a'_{11}=a_{11}-\frac{1}{6} \left(\frac{2 (q_{11}-q_{12})^2}{c_{11}-c_{12}}+\frac{(q_{11}+2 q_{12})^2}{c_{11}+2 c_{12}}\right)
+\end{align}
+Using the parameters from Bell and Cross \\
+
+ \indent \indent \indent \indent $2^{nd}$ Term Correction $\propto 4.260 \times 10^7 $
+\begin{align}
+a_{11}&=-2.02*10^8 - 4.69*10^6 (-393 + T) \\
+a'_{11}&=-2.44601*10^8 - 4.69*10^6 (-393 + T)
+\end{align}
+
+The Polarization is then
+\begin{align}
+P_3&=\sqrt{\frac{\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}}{3a_{111}}} \\
+P_3^2 &=\frac{\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}}{3a_{111}}
+\end{align}
+
+The polarization can be expressed by means of the unstrained solution with some perturbation from the elastic subsystem. \\
+%For simplicity the magnitude will be considered here
+\center $P'_3=P_0+\delta P$ \\
+\center $a'_{11}=a_{11}+\delta \text{A}$ \\
+
+\begin{align}
+P'_3 &=\sqrt{\frac{\sqrt{(a'_{11})^2-3 a_1 a_{111}}-a'_{11}}{3a_{111}}} \\
+P_0 &=\sqrt{\frac{\sqrt{(a_{11})^2-3 a_1 a_{111}}-a_{11}}{3a_{111}}} \\
+\delta P &=P'_3-P_0 \\
+\begin{split} \delta P &= \frac{P_0\text{$\delta $A}}{2 \sqrt{a_{11}^2-3 a_1 a_{111}}}- 
+\\ \\ & \frac{\left(a_{11}^2-\sqrt{a_{11}^2-3 a_1 a_{111}} a_{11}+3 a_1 a_{111}\right) \text{$\delta $A}^2}{8 \left(\sqrt{3} a_{111} \left(a_{11}^2-3 a_1 a_{111}\right){}^{3/2} \sqrt{\frac{\sqrt{a_{11}^2-3 a_1 a_{111}}-a_{11}}{a_{111}}}\right)}+O\left(\text{$\delta $A}^3\right) \end{split}
+\end{align}
+
+For temperatures within the Tetragonal Phase $283 < T < 393 $ the correction of the polarization is minimal
+\begin{align}
+\delta P\text{\textvertline}_{T=300} &= P_0 *0.0255407+O\left(\text{$\delta $A}^2\right) 
+\end{align}
+
+
+
+
+
+\end{document}
